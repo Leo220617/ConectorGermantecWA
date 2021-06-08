@@ -78,6 +78,12 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
     <File Include="bin/Antlr3.Runtime.pdb">
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>06/07/2018 11:03:48</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>06/07/2018 11:03:48</publishTime>
+    </File>
     <File Include="bin/es/System.Net.Http.Formatting.resources.dll">
       <publishTime>02/01/2018 12:17:28</publishTime>
     </File>
@@ -286,10 +292,10 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>02/01/2018 12:20:56</publishTime>
     </File>
     <File Include="bin/WAConectorAPI.dll">
-      <publishTime>05/07/2021 11:57:34</publishTime>
+      <publishTime>06/07/2021 15:33:28</publishTime>
     </File>
     <File Include="bin/WAConectorAPI.pdb">
-      <publishTime>05/07/2021 11:57:34</publishTime>
+      <publishTime>06/07/2021 15:33:28</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>01/23/2014 13:57:34</publishTime>
@@ -385,7 +391,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>05/07/2021 10:27:02</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/07/2021 11:57:19</publishTime>
+      <publishTime>05/14/2021 13:05:51</publishTime>
     </File>
   </ItemGroup>
 </Project>

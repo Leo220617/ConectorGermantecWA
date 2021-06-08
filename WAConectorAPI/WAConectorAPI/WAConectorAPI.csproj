@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,9 +52,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Interop.SAPbobsCOM">
-      <HintPath>..\..\..\ConectorGermantec\ConectorSAP\ConectorSAP\bin\Interop.SAPbobsCOM.dll</HintPath>
+    <Reference Include="Interop.SAPbobsCOM, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>bin\Interop.SAPbobsCOM.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -167,18 +169,29 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\CreditCardsController.cs" />
     <Compile Include="Controllers\G.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventariosController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\PurhcaseOrderController.cs" />
     <Compile Include="Controllers\RateController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Apis\ClienteViewModel.cs" />
     <Compile Include="Models\Apis\FiltroInventarios.cs" />
+    <Compile Include="Models\Apis\PurchaiseOrderLinesViewModel.cs" />
+    <Compile Include="Models\Apis\PurchaseOrderViewModel.cs" />
+    <Compile Include="Models\ModelCliente\BitacoraErrores.cs" />
+    <Compile Include="Models\ModelCliente\DetOrdenes.cs" />
+    <Compile Include="Models\ModelCliente\DetOrdenesHistorico.cs" />
+    <Compile Include="Models\ModelCliente\EncOrdenes.cs" />
+    <Compile Include="Models\ModelCliente\EncOrdenesHistorico.cs" />
     <Compile Include="Models\ModelCliente\Login.cs" />
     <Compile Include="Models\ModelCliente\ModelCliente.cs" />
+    <Compile Include="Models\Vtex\getOrder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,3 +1,5 @@
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.XmlDocument.dll
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\VBCSCompiler.exe
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\WAConectorAPI.dll.config
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\WAConectorAPI.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\WAConectorAPI.pdb
@@ -39,15 +41,15 @@ D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Securit
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Text.Encoding.CodePages.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.ValueTuple.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.ReaderWriter.dll
-D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.XmlDocument.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.XPath.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.XPath.XDocument.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\vbc.exe
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\vbc.exe.config
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\vbc.rsp
-D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\VBCSCompiler.exe
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\VBCSCompiler.exe.config
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\Antlr3.Runtime.dll
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.dll
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.SqlServer.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\Microsoft.Web.Infrastructure.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\Newtonsoft.Json.dll
@@ -62,6 +64,8 @@ D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\System.Web.WebPages.D
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\System.Web.WebPages.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\System.Web.WebPages.Razor.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\WebGrease.dll
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.xml
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.SqlServer.xml
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\Newtonsoft.Json.xml
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\System.Net.Http.Formatting.xml
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\System.Web.Helpers.xml
@@ -85,12 +89,7 @@ D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\es\System.Web.Razor.r
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\es\System.Web.WebPages.resources.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\es\System.Web.WebPages.Deployment.resources.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\es\System.Web.WebPages.Razor.resources.dll
-D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.csprojAssemblyReference.cache
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.csproj.CoreCompileInputs.cache
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.csproj.CopyComplete
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.pdb
-D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.dll
-D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.SqlServer.dll
-D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.xml
-D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.SqlServer.xml

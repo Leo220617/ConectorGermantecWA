@@ -89,3 +89,8 @@ D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.csproj.CopyComplete
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.pdb
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.dll
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.SqlServer.dll
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.xml
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.SqlServer.xml
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.csprojAssemblyReference.cache

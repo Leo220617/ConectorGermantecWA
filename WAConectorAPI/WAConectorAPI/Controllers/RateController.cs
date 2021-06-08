@@ -56,9 +56,14 @@ namespace WAConectorAPI.Controllers
 
                 DataSet Ds = new DataSet();
 
+          
+
                 Cn.Open();
 
                 Da.Fill(Ds, "Rate");
+
+
+
 
                 Cn.Close();
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using WAConectorAPI.Models.Vtex;
 
 namespace WAConectorAPI.Controllers
 {
@@ -37,9 +38,32 @@ namespace WAConectorAPI.Controllers
         }
 
         // GET api/values/5
-        public string Get(int id)
+        public async System.Threading.Tasks.Task<getOrder> GetAsync(int id)
         {
-            return "value";
+            WebClient client = new WebClient();
+            client.Headers.Add("X-VTEX-API-AppKey", "vtexappkey-germantecmex-GXWMYU");
+            client.Headers.Add("X-VTEX-API-AppToken", "EETXLUZWDLEEUAGTTQFWABFAOFUESFJPPZSMCIDEJXLNPHRZXGWDAYXCYTJGZUEXBPOUHTQKNANCQSLGNVGLIFORCQNJZXEOTOLZSXSEQMQZLUMGICTEOSOWAXRRGHKQ");
+
+            HttpClient cliente = new HttpClient();
+            cliente.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", "vtexappkey-germantecmex-GXWMYU");
+            cliente.DefaultRequestHeaders.Add("X-VTEX-API-AppToken", "EETXLUZWDLEEUAGTTQFWABFAOFUESFJPPZSMCIDEJXLNPHRZXGWDAYXCYTJGZUEXBPOUHTQKNANCQSLGNVGLIFORCQNJZXEOTOLZSXSEQMQZLUMGICTEOSOWAXRRGHKQ");
+
+            string path = "https://germantecmex.vtexcommercestable.com.br/api/oms/pvt/orders/1135783407665-01";
+
+            HttpResponseMessage response = await cliente.GetAsync(path);
+
+            getOrder product = new getOrder();
+            if (response.IsSuccessStatusCode)
+            {
+                product = await response.Content.ReadAsAsync<getOrder>();
+
+            }
+
+
+
+
+
+            return product;
         }
 
         // POST api/values

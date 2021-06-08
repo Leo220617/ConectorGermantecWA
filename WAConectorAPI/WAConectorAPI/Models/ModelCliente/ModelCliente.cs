@@ -13,6 +13,12 @@ namespace WAConectorAPI.Models.ModelCliente
         }
 
         public virtual DbSet<Login> Login { get; set; }
+        public virtual DbSet<BitacoraErrores> BitacoraErrores { get; set; }
+        public virtual DbSet<EncOrdenes> EncOrdenes { get; set; }
+        public virtual DbSet<EncOrdenesHistorico> EncOrdenesHistorico { get; set; }
+        public virtual DbSet<DetOrdenes> DetOrdenes { get; set; }
+        public virtual DbSet<DetOrdenesHistorico> DetOrdenesHistorico { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

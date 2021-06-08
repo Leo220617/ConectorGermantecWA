@@ -41,7 +41,7 @@ namespace WAConectorAPI.Controllers
                 Server = Datos.ServerSQL,
                 LicenseServer = Datos.ServerLicense,
                 DbServerType = getBDType(Datos.SQLType),
-                language = BoSuppLangs.ln_English,
+                language = BoSuppLangs.ln_Spanish_La,
                 CompanyDB = Datos.SQLBD,
                 UserName = Datos.SAPUser,
                 Password = Datos.SAPPass
@@ -71,8 +71,8 @@ namespace WAConectorAPI.Controllers
                     return BoDataServerTypes.dst_MSSQL2012;
                 case "2014":
                     return BoDataServerTypes.dst_MSSQL2014;
-                //case "2016":
-                //    return BoDataServerTypes.dst_MSSQL2016;
+                case "2016":
+                    return BoDataServerTypes.dst_MSSQL2016;
                 case "HANA":
                     return BoDataServerTypes.dst_HANADB;
                 default:
@@ -88,5 +88,8 @@ namespace WAConectorAPI.Controllers
 
             return sql;
         }
+
+
+
     }
 }
