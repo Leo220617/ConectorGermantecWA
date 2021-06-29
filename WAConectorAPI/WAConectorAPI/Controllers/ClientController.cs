@@ -137,6 +137,7 @@ namespace WAConectorAPI.Controllers
 
                 client.CardType = BoCardTypes.cCustomer;
                 client.FederalTaxID = cliente.LicTradNum;
+                client.Addresses.Add();
                 client.Addresses.SetCurrentLine(0);
                 if (!string.IsNullOrEmpty(cliente.AddressName))
                 {
@@ -152,16 +153,19 @@ namespace WAConectorAPI.Controllers
                 if (!string.IsNullOrEmpty(cliente.City))
                 {
                     client.Addresses.City = cliente.City;
+                    client.City = cliente.City;
                 }
 
                 if (!string.IsNullOrEmpty(cliente.County))
                 {
                     client.Addresses.County = cliente.County;
+                    client.County = cliente.County;
                 }
 
                 if (!string.IsNullOrEmpty(cliente.Street))
                 {
                     client.Addresses.Street = cliente.Street;
+                    
                 }
 
                 if (!string.IsNullOrEmpty(cliente.TypeOfAddress))
@@ -169,8 +173,11 @@ namespace WAConectorAPI.Controllers
                     client.Addresses.TypeOfAddress = cliente.TypeOfAddress;
                 }
 
-                client.Addresses.Add();
-
+               
+               
+                   
+                   
+                    
 
 
 
@@ -221,6 +228,79 @@ namespace WAConectorAPI.Controllers
             }
         }
 
+
+        [Route("api/Client/Actualizar")]
+        [HttpPost]
+        public HttpResponseMessage Put([FromBody] ClienteViewModel cliente)
+        {
+            object resp;
+            try
+            {
+                var client = (SAPbobsCOM.BusinessPartners)G.Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBusinessPartners);
+
+                var encontrado = client.GetByKey(cliente.CardCode);
+
+                if (encontrado)
+                {
+                    client.CardName = cliente.CardName;
+                    client.FederalTaxID = cliente.LicTradNum;
+                    client.Phone1 = cliente.Phone1;
+            
+
+                    client.Addresses.Add();
+                    client.Addresses.SetCurrentLine(0);
+
+                    client.City = cliente.City;
+                    client.County = cliente.County;
+                    client.Address = cliente.AddressName;
+                    client.Addresses.AddressName = client.Address;
+                    client.Addresses.City = cliente.City;
+                    client.Addresses.County = cliente.County;
+                    client.Addresses.Street = cliente.Street;
+                    client.Addresses.TypeOfAddress = "S";
+                   
+
+                    var respuesta = client.Update();
+                    if(respuesta == 0)
+                    {
+                        resp = new
+                        {
+
+               
+                    
+                            Type = "oBussinessPartners",
+                            Status = 1,
+                            Message = "Socio de negocio actualizado exitosamente",
+                            User = G.Company.UserName
+                        };
+                        return Request.CreateResponse(HttpStatusCode.OK, resp);
+                    }
+                }
+
+                resp = new
+                {
+                    //   Series = pedido.Series.ToString(),
+                    Type = "oBussinessPartners",
+                    Status = 0,
+                    Message = G.Company.GetLastErrorDescription(),
+                    User = G.Company.UserName
+                };
+                return Request.CreateResponse(HttpStatusCode.OK, resp);
+            }
+            catch (Exception ex)
+            {
+
+                resp = new
+                {
+                    //   Series = pedido.Series.ToString(),
+                    Type = "oBussinessPartners",
+                    Status = 0,
+                    Message = ex.Message + " ->" + ex.StackTrace,
+                    User = G.Company.UserName
+                };
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, resp);
+            }
+        }
 
 
 

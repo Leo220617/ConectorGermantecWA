@@ -18,7 +18,10 @@ namespace WAConectorAPI.Models.ModelCliente
         public virtual DbSet<EncOrdenesHistorico> EncOrdenesHistorico { get; set; }
         public virtual DbSet<DetOrdenes> DetOrdenes { get; set; }
         public virtual DbSet<DetOrdenesHistorico> DetOrdenesHistorico { get; set; }
-
+        public virtual DbSet<Inventario> Inventario { get; set; }
+        public virtual DbSet<Parametros> Parametros { get; set; }
+        public virtual DbSet<InventariosBodegas> InventariosBodegas { get; set; }
+        public virtual DbSet<EnvioCorreos> EnvioCorreos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

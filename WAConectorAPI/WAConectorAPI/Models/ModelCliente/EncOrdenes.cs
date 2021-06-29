@@ -14,6 +14,7 @@ namespace WAConectorAPI.Models.ModelCliente
         public string orderid { get; set; }
         public DateTime creationDate { get; set; }
         public string idVtex { get; set; }
+        public string Cedula { get; set; }
         public string clientName { get; set; }
         public string telefono { get; set; }
         public string Correo { get; set; }
@@ -26,6 +27,8 @@ namespace WAConectorAPI.Models.ModelCliente
         public decimal Subtotal { get; set; }
         public decimal Impuestos { get; set; }
         public decimal Descuento { get; set; }
+        public string CreditCardNumber { get; set; }
+        public string VoucherNum { get; set; }
     }
 
 }

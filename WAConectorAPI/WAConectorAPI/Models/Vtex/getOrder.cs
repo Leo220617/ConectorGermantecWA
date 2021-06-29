@@ -12,7 +12,8 @@ namespace WAConectorAPI.Models.Vtex
         public string currencyCode { get; set; }
         public string clientName { get; set; }
         public int totalItems { get; set; }
-
+        public string hostname { get; set; }
+        
     }
 
     public class ListaOrdenes
@@ -29,8 +30,30 @@ namespace WAConectorAPI.Models.Vtex
         public items[] items { get; set; }
         public shippingData shippingData { get; set; }
         public clientProfileData clientProfileData { get; set; }
-
+        public customData customData { get; set; }
+        public paymentData paymentData { get; set; }
     }
+
+    public class paymentData
+    {
+        public transactions[] transactions { get; set; }
+    }
+
+    public class transactions
+    {
+        public payments[] payments { get; set; }
+    }
+
+    public class payments
+    {
+        public string lastDigits { get; set; }
+        public connectorResponses connectorResponses { get; set; }
+    }
+    public class connectorResponses
+    {
+        public string nsu { get; set; }
+    }
+
     public class totals
     {
         public string id { get; set; }
@@ -75,6 +98,22 @@ namespace WAConectorAPI.Models.Vtex
         public string phone { get; set; }
         public string userProfileId { get; set; }
 
+    }
+
+    public class customData
+    {
+        public List<customApps> customApps { get; set; }
+    }
+
+    public class customApps
+    {
+        public fields fields { get; set; }
+        public string id { get; set; }
+    }
+
+    public class fields
+    {
+        public string documentNew { get; set; }
     }
 
 }

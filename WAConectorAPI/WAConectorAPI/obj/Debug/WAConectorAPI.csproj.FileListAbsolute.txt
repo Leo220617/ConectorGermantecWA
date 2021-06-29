@@ -1,5 +1,99 @@
-D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.XmlDocument.dll
-D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\VBCSCompiler.exe
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\WAConectorAPI.dll.config
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\WAConectorAPI.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\WAConectorAPI.pdb
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\csc.exe
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\csc.exe.config
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\csc.rsp
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\csi.exe
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\csi.exe.config
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\csi.rsp
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\Microsoft.Managed.Core.targets
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.AppContext.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Collections.Immutable.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Console.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.IO.Compression.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.IO.FileSystem.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.IO.Pipes.AccessControl.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.IO.Pipes.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Reflection.Metadata.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Security.AccessControl.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Security.Claims.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Security.Principal.Windows.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.ValueTuple.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.XmlDocument.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.XPath.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\vbc.exe
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\vbc.exe.config
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\vbc.rsp
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\VBCSCompiler.exe
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\roslyn\VBCSCompiler.exe.config
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\Antlr3.Runtime.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\EntityFramework.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\EntityFramework.SqlServer.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\Microsoft.Web.Infrastructure.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\Newtonsoft.Json.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Net.Http.Formatting.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.Helpers.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.Http.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.Http.WebHost.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.Mvc.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.Optimization.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.Razor.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.WebPages.Deployment.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.WebPages.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.WebPages.Razor.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\WebGrease.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\EntityFramework.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\EntityFramework.SqlServer.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\Newtonsoft.Json.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Net.Http.Formatting.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.Helpers.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.Http.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.Http.WebHost.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.Mvc.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.Optimization.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.Razor.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.WebPages.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.WebPages.Deployment.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\System.Web.WebPages.Razor.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\Antlr3.Runtime.pdb
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\es\System.Net.Http.Formatting.resources.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\es\System.Web.Helpers.resources.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\es\System.Web.Http.resources.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\es\System.Web.Http.WebHost.resources.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\es\System.Web.Mvc.resources.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\es\System.Web.Optimization.resources.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\es\System.Web.Razor.resources.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\es\System.Web.WebPages.resources.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\es\System.Web.WebPages.Deployment.resources.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\bin\es\System.Web.WebPages.Razor.resources.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.csproj.CoreCompileInputs.cache
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.csproj.CopyComplete
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.dll
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.pdb
+E:\DyD Consultores\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.csprojAssemblyReference.cache
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\WAConectorAPI.dll.config
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\WAConectorAPI.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\WAConectorAPI.pdb
@@ -41,11 +135,13 @@ D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Securit
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Text.Encoding.CodePages.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.ValueTuple.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.XmlDocument.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.XPath.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\System.Xml.XPath.XDocument.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\vbc.exe
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\vbc.exe.config
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\vbc.rsp
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\VBCSCompiler.exe
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\roslyn\VBCSCompiler.exe.config
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\Antlr3.Runtime.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\EntityFramework.dll
@@ -89,6 +185,7 @@ D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\es\System.Web.Razor.r
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\es\System.Web.WebPages.resources.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\es\System.Web.WebPages.Deployment.resources.dll
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\es\System.Web.WebPages.Razor.resources.dll
+D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.csprojAssemblyReference.cache
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.csproj.CoreCompileInputs.cache
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.csproj.CopyComplete
 D:\GIT\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Debug\WAConectorAPI.dll
