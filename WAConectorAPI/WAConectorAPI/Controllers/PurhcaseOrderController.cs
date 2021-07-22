@@ -500,7 +500,7 @@ namespace WAConectorAPI.Controllers
                         fac.ProcesadaSAP = true;
                         db.SaveChanges();
 
-                        var Pago = (SAPbobsCOM.Payments)G.Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oPaymentsDrafts);
+                        var Pago = (SAPbobsCOM.Payments)G.Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oIncomingPayments);
                         Pago.DocObjectCode = BoPaymentsObjectType.bopot_IncomingPayments;
                         Pago.CardCode = CardCode;
                         Pago.DocTypte = BoRcptTypes.rCustomer;
