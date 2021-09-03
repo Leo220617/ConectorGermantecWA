@@ -66,6 +66,7 @@ namespace WAConectorAPI.Models.Vtex
         public string refId { get; set; }
         public int quantity { get; set; }
         public double costPrice { get; set; }
+        public double price { get; set; }
         public priceTags[] priceTags { get; set; }
         public double tax { get; set; }
       

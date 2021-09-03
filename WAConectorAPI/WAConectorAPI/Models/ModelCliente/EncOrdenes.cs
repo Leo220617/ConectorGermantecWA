@@ -29,6 +29,7 @@ namespace WAConectorAPI.Models.ModelCliente
         public decimal Descuento { get; set; }
         public string CreditCardNumber { get; set; }
         public string VoucherNum { get; set; }
+        public bool PagoProcesado { get; set; }
     }
 
 }

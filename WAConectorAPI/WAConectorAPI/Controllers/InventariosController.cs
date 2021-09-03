@@ -258,8 +258,10 @@ namespace WAConectorAPI.Controllers
             {
                 Parametros param = db.Parametros.FirstOrDefault();
                 DateTime time = DateTime.Now;
-
-                var Inventario = db.Inventario.Where(a => a.skuid != null && a.skuid != "" && a.FechaActualizacion.Year == time.Year && a.FechaActualizacion.Month == time.Month && a.FechaActualizacion.Day < time.Day).Take(40).ToList();
+                time = time.AddHours(-DateTime.Now.Hour);
+               time = time.AddMinutes(-DateTime.Now.Minute);
+                time = time.AddSeconds(-(DateTime.Now.Second - 1));
+                var Inventario = db.Inventario.Where(a => a.skuid != null && a.skuid != "" && a.FechaActualizacion < time ).Take(40).ToList();
 
                 foreach (var item in Inventario)
                 {
@@ -335,7 +337,10 @@ namespace WAConectorAPI.Controllers
             {
                 Parametros param = db.Parametros.FirstOrDefault();
                 DateTime time = DateTime.Now;
-                var Inventario = db.Inventario.Where(a => a.skuid != null && a.skuid != ""  && a.FechaActPrec.Year == time.Year && a.FechaActPrec.Month == time.Month && a.FechaActPrec.Day < time.Day).Take(40).ToList();
+                time = time.AddHours(-DateTime.Now.Hour);
+                time = time.AddMinutes(-DateTime.Now.Minute);
+                time = time.AddSeconds(-(DateTime.Now.Second - 1));
+                var Inventario = db.Inventario.Where(a => a.skuid != null && a.skuid != ""  && a.FechaActPrec < time).Take(40).ToList();
 
                 foreach (var item in Inventario)
                 {

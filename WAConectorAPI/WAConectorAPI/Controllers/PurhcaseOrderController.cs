@@ -213,12 +213,12 @@ namespace WAConectorAPI.Controllers
                                     detOrd.Descuento = (item2.priceTags[0].value < 0 ? ToDecimal(Math.Abs(item2.priceTags[0].value)) : 0);
                                     detOrd.Impuestos = ToDecimal(item2.tax);
                                     var descont = (item2.priceTags[0].value < 0 ? Math.Abs(item2.priceTags[0].value) : 0);
-                                    detOrd.SubTotal = ToDecimal((item2.quantity * item2.costPrice) - Convert.ToDouble(descont));
+                                    detOrd.SubTotal = ToDecimal((item2.quantity * item2.price) - Convert.ToDouble(descont));
                                     detOrd.Total = detOrd.Impuestos + detOrd.SubTotal;
                                     detOrd.TaxCode = (detOrd.Descuento > 0 ? item2.priceTags[1].value : item2.priceTags[0].value);
                                     detOrd.itemid = item2.productId;
                                     detOrd.itemCode = item2.refId;
-                                    detOrd.unitPrice = ToDecimal(item2.costPrice);
+                                    detOrd.unitPrice = ToDecimal(item2.price);
                                     detOrd.quantity = item2.quantity;
                                     
                                     var SQL = " select top 1 U_BOD_VT from oitm where ItemCode like '%" + detOrd.itemCode + "%'";
@@ -527,6 +527,10 @@ namespace WAConectorAPI.Controllers
                         var resp2 = Pago.Add();
                         if (resp2 != 0)
                         {
+                            db.Entry(fac).State = System.Data.Entity.EntityState.Modified;
+                            fac.PagoProcesado = false;
+                            db.SaveChanges();
+
                             BitacoraErrores error = new BitacoraErrores();
                             error.Descripcion = G.Company.GetLastErrorDescription();
                             error.StackTrace = "Generacion del pago en la factura #: " + fac.orderid;
@@ -534,6 +538,12 @@ namespace WAConectorAPI.Controllers
                             db.BitacoraErrores.Add(error);
                             db.SaveChanges();
                             metodo.EnviarCorreo("Generar Pago Factura", error.Descripcion, error.StackTrace);
+                        }
+                        else
+                        {
+                            db.Entry(fac).State = System.Data.Entity.EntityState.Modified;
+                            fac.PagoProcesado = true;
+                            db.SaveChanges();
                         }
 
 
