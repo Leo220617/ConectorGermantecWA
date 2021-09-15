@@ -296,7 +296,7 @@ namespace WAConectorAPI.Controllers
                         catch (Exception ex)
                         {
                             BitacoraErrores error = new BitacoraErrores();
-                            error.Descripcion = path;
+                            error.Descripcion = ex.Message;
                             error.StackTrace = "Actualizacion en VTEX del articulo " + item.skuid;
                             error.Fecha = DateTime.Now;
                             db.BitacoraErrores.Add(error);
