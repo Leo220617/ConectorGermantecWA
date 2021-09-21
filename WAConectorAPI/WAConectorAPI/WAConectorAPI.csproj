@@ -173,6 +173,7 @@
     <Compile Include="Controllers\CreditCardsController.cs" />
     <Compile Include="Controllers\G.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IngoController.cs" />
     <Compile Include="Controllers\InventariosController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\Metodos.cs" />
@@ -184,7 +185,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Apis\ClienteViewModel.cs" />
+    <Compile Include="Models\Apis\DevolucionIngo.cs" />
+    <Compile Include="Models\Apis\FiltroIngo.cs" />
     <Compile Include="Models\Apis\FiltroInventarios.cs" />
+    <Compile Include="Models\Apis\infoArt.cs" />
     <Compile Include="Models\Apis\PagoViewModel.cs" />
     <Compile Include="Models\Apis\PurchaiseOrderLinesViewModel.cs" />
     <Compile Include="Models\Apis\PurchaseOrderViewModel.cs" />

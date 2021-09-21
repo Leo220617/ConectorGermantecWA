@@ -149,8 +149,8 @@ namespace WAConectorAPI.Controllers
             {
                 DateTime time = DateTime.Now;
                 Parametros param = db.Parametros.FirstOrDefault();
-                var SQL = " select t0.ItemCode, t1.ItemName, t0.WhsCode, t0.OnHand, t0.IsCommited, t0.OnHand - t0.IsCommited Stock, t2.Price, t2.Currency, t3.Rate from oitw t0 inner join oitm t1 on t0.ItemCode = t1.ItemCode and t0.WhsCode = t1.U_Bod_VT ";
-                SQL += " inner join itm1 t2 on t0.ItemCode = t2.ItemCode and t2.PriceList = '7' ";
+                var SQL = " select t0.ItemCode, t1.ItemName, t0.WhsCode, t4.ItmsGrpNam, t0.OnHand, t0.IsCommited, t0.OnHand - t0.IsCommited Stock, t2.Price, t2.Currency, t3.Rate from oitw t0 inner join oitm t1 on t0.ItemCode = t1.ItemCode and t0.WhsCode = t1.U_Bod_VT ";
+                SQL += " inner join itm1 t2 on t0.ItemCode = t2.ItemCode and t2.PriceList = '7' inner join oitb t4 on t4.ItmsGrpCod = t1.ItmsGrpCod ";
                 SQL += " left join Ortt t3 on t2.Currency = t3.Currency and t3.RateDate = '" + time.Year + (time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString()) + (time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString()) + "' ";
 
                 SqlConnection Cn = new SqlConnection(g.DevuelveCadena());
@@ -172,6 +172,8 @@ namespace WAConectorAPI.Controllers
                             inventario.ItemCode = item["ItemCode"].ToString();
                             inventario.ItemName = item["ItemName"].ToString();
                             inventario.WhsCode = item["WhsCode"].ToString();
+
+                            //Aca nosotros encontramos cual es el skuid en vtex 
                             HttpClient cliente2 = new HttpClient();
                             cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
                             cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppToken", param.APP_TOKEN);
@@ -186,8 +188,13 @@ namespace WAConectorAPI.Controllers
                                 detalle = await response2.Content.ReadAsAsync<string>();
 
                             }
-                            inventario.skuid = detalle;
 
+
+                            inventario.skuid = detalle;
+                            //Aca terminamos de encontrar el skuid
+
+
+                            inventario.Familia = item["ItmsGrpNam"].ToString();
                             inventario.OnHand = Convert.ToDecimal(item["OnHand"].ToString());
                             inventario.IsCommited = Convert.ToDecimal(item["IsCommited"].ToString());
                             inventario.Stock = (Convert.ToDecimal(item["Stock"].ToString()) < 0 ? 0 : Convert.ToDecimal(item["Stock"].ToString()));
@@ -197,12 +204,75 @@ namespace WAConectorAPI.Controllers
                             inventario.FechaActPrec = time.AddDays(-1);
                             inventario.FechaActualizacion = time.AddDays(-1);
                             inventario.Total = inventario.Precio * inventario.TipoCambio;
+
+                            //Aca nosotros encontramos la informacion del producto
+                            if (!string.IsNullOrEmpty(inventario.skuid))
+                            {
+                                try
+                                {
+                                    HttpClient cliente3 = new HttpClient();
+                                    cliente3.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
+                                    cliente3.DefaultRequestHeaders.Add("X-VTEX-API-AppToken", param.APP_TOKEN);
+
+
+                                    string path3 = param.urlInventarioInfo + inventario.skuid;
+                                    HttpResponseMessage response3 = await cliente3.GetAsync(path3);
+
+                                    infoArt detalle2 = new infoArt();
+                                    if (response3.IsSuccessStatusCode)
+                                    {
+                                        detalle2 = await response3.Content.ReadAsAsync<infoArt>();
+
+                                    }
+
+
+                                    inventario.Descripcion = detalle2.ProductDescription;
+                                    inventario.Marca = detalle2.BrandName;
+                                    inventario.Imagen = detalle2.ImageUrl;
+                                }
+                                catch (Exception ex)
+                                {
+
+                                    BitacoraErrores error = new BitacoraErrores();
+                                    error.Descripcion = ex.Message + " -> " + itemCode;
+                                    error.StackTrace = "Insercion del inventario en la tabla media informacion ";
+                                    error.Fecha = DateTime.Now;
+                                    db.BitacoraErrores.Add(error);
+                                    db.SaveChanges();
+                                }
+                            }
+                            //Aca terminamos de encontrar la informacion del producto
+
                             db.Inventario.Add(inventario);
                             db.SaveChanges();
                         }
                         else
                         {
                             db.Entry(inventario).State = System.Data.Entity.EntityState.Modified;
+                            if(string.IsNullOrEmpty(inventario.skuid))
+                            {
+                                //Aca nosotros encontramos cual es el skuid en vtex 
+                                HttpClient cliente2 = new HttpClient();
+                                cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
+                                cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppToken", param.APP_TOKEN);
+
+
+                                string path2 = param.urlTomarSKU + inventario.ItemCode;
+                                HttpResponseMessage response2 = await cliente2.GetAsync(path2);
+
+                                string detalle = "";
+                                if (response2.IsSuccessStatusCode)
+                                {
+                                    detalle = await response2.Content.ReadAsAsync<string>();
+
+                                }
+
+
+                                inventario.skuid = detalle;
+                                //Aca terminamos de encontrar el skuid
+                            }
+
+                            inventario.Familia = item["ItmsGrpNam"].ToString();
                             inventario.OnHand = Convert.ToDecimal(item["OnHand"].ToString());
                             inventario.IsCommited = Convert.ToDecimal(item["IsCommited"].ToString());
                             inventario.Stock = (Convert.ToDecimal(item["Stock"].ToString()) < 0 ? 0 : Convert.ToDecimal(item["Stock"].ToString()));
@@ -211,6 +281,45 @@ namespace WAConectorAPI.Controllers
                             inventario.TipoCambio = ((item["Rate"].ToString() == "" && inventario.Currency == "COL") ? 1 : (item["Rate"].ToString() == "" && inventario.Currency != "COL") ? inventario.TipoCambio : Convert.ToDecimal(item["Rate"].ToString()));
 
                             inventario.Total = inventario.Precio * inventario.TipoCambio;
+
+
+                            //Aca nosotros encontramos la informacion del producto
+                            if(!string.IsNullOrEmpty(inventario.skuid) && string.IsNullOrEmpty(inventario.Imagen))
+                            {
+                                try
+                                {
+                                    HttpClient cliente3 = new HttpClient();
+                                    cliente3.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
+                                    cliente3.DefaultRequestHeaders.Add("X-VTEX-API-AppToken", param.APP_TOKEN);
+
+
+                                    string path3 = param.urlInventarioInfo + inventario.skuid;
+                                    HttpResponseMessage response3 = await cliente3.GetAsync(path3);
+
+                                    infoArt detalle2 = new infoArt();
+                                    if (response3.IsSuccessStatusCode)
+                                    {
+                                        detalle2 = await response3.Content.ReadAsAsync<infoArt>();
+
+                                    }
+
+
+                                    inventario.Descripcion = detalle2.ProductDescription;
+                                    inventario.Marca = detalle2.BrandName;
+                                    inventario.Imagen = detalle2.ImageUrl;
+                                }
+                                catch (Exception ex)
+                                {
+
+                                    BitacoraErrores error = new BitacoraErrores();
+                                    error.Descripcion = ex.Message + " -> " + itemCode;
+                                    error.StackTrace = "Insercion del inventario en la tabla media informacion ";
+                                    error.Fecha = DateTime.Now;
+                                    db.BitacoraErrores.Add(error);
+                                    db.SaveChanges();
+                                }
+                            }
+                             //Aca terminamos de encontrar la informacion del producto
 
                             db.SaveChanges();
                         }
