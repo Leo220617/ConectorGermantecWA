@@ -436,6 +436,7 @@ namespace WAConectorAPI.Controllers
                         client.Lines.ItemCode = item.itemCode;
                         client.Lines.Quantity = item.quantity;
                         client.Lines.TaxCode = "IVA-" + item.TaxCode.ToString();
+                         
                     
                             client.Lines.TaxOnly = BoYesNoEnum.tNO;
              
