@@ -228,7 +228,7 @@ namespace WAConectorAPI.Controllers
 
                                     inventario.Descripcion = detalle2.ProductDescription;
                                     inventario.Marca = detalle2.BrandName;
-                                    inventario.Imagen = detalle2.ImageUrl;
+                                    inventario.Imagen = detalle2.Images.FirstOrDefault().ImageUrl;
                                 }
                                 catch (Exception ex)
                                 {
@@ -306,7 +306,7 @@ namespace WAConectorAPI.Controllers
 
                                     inventario.Descripcion = detalle2.ProductDescription;
                                     inventario.Marca = detalle2.BrandName;
-                                    inventario.Imagen = detalle2.ImageUrl;
+                                    inventario.Imagen = detalle2.Images.FirstOrDefault().ImageUrl;
                                 }
                                 catch (Exception ex)
                                 {

@@ -292,10 +292,10 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>09/17/2021 23:41:23</publishTime>
     </File>
     <File Include="bin/WAConectorAPI.dll">
-      <publishTime>09/23/2021 16:33:22</publishTime>
+      <publishTime>10/18/2021 10:26:16</publishTime>
     </File>
     <File Include="bin/WAConectorAPI.pdb">
-      <publishTime>09/23/2021 16:33:22</publishTime>
+      <publishTime>10/18/2021 10:26:16</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>09/17/2021 23:41:24</publishTime>

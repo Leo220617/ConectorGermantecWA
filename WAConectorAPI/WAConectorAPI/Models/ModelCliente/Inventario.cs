@@ -29,5 +29,6 @@ namespace WAConectorAPI.Models.ModelCliente
         public string Marca { get; set; }
         public string Imagen { get; set; }
         public string Familia { get; set; }
+        public bool Ingo { get; set; }
     }
 }

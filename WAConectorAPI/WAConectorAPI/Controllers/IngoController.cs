@@ -30,7 +30,7 @@ namespace WAConectorAPI.Controllers
                     List<DevolucionIngo> di = new List<DevolucionIngo>();
 
 
-                    var Inventario = db.Inventario.Where(a => !string.IsNullOrEmpty(a.Descripcion) && !string.IsNullOrEmpty(a.Imagen) && !string.IsNullOrEmpty(a.Familia)).ToList();
+                    var Inventario = db.Inventario.Where(a => !string.IsNullOrEmpty(a.Descripcion) && !string.IsNullOrEmpty(a.Imagen) && !string.IsNullOrEmpty(a.Familia) && a.Ingo == true).ToList();
 
                     foreach (var item in Inventario)
                     {
@@ -42,7 +42,7 @@ namespace WAConectorAPI.Controllers
                         dev.Marca = item.Marca;
                         dev.Imagen = item.Imagen;
                         dev.Familia = item.Familia;
-                        dev.Precio = Convert.ToInt32(Math.Round(item.Precio));
+                        dev.Precio = Convert.ToInt32(Math.Round(item.Precio * item.TipoCambio));
                         dev.Stock = Convert.ToInt32(item.Stock);
 
                         di.Add(dev);
