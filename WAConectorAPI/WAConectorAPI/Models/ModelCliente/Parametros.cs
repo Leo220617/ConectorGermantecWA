@@ -20,5 +20,6 @@ namespace WAConectorAPI.Models.ModelCliente
         public string urlActualizarPrecio { get; set; }
         public string urlInventarioInfo { get; set; }
         public string IngoToken { get; set; }
+        public string SQLInventario { get; set; }
     }
 }

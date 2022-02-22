@@ -149,10 +149,12 @@ namespace WAConectorAPI.Controllers
             {
                 DateTime time = DateTime.Now;
                 Parametros param = db.Parametros.FirstOrDefault();
-                var SQL = " select t0.ItemCode, t1.ItemName, t0.WhsCode, t4.ItmsGrpNam, t0.OnHand, t0.IsCommited, t0.OnHand - t0.IsCommited Stock, t2.Price, t2.Currency, t3.Rate from oitw t0 inner join oitm t1 on t0.ItemCode = t1.ItemCode and t0.WhsCode = t1.U_Bod_VT ";
-                SQL += " inner join itm1 t2 on t0.ItemCode = t2.ItemCode and t2.PriceList = '7' inner join oitb t4 on t4.ItmsGrpCod = t1.ItmsGrpCod ";
-                SQL += " left join Ortt t3 on t2.Currency = t3.Currency and t3.RateDate = '" + time.Year + (time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString()) + (time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString()) + "' ";
+                //var SQL = " select t0.ItemCode, t1.ItemName, t0.WhsCode, t4.ItmsGrpNam, t0.OnHand, t0.IsCommited, t0.OnHand - t0.IsCommited Stock, t2.Price, t2.Currency, t3.Rate from oitw t0 inner join oitm t1 on t0.ItemCode = t1.ItemCode and t0.WhsCode = t1.U_Bod_VT ";
+                //SQL += " inner join itm1 t2 on t0.ItemCode = t2.ItemCode and t2.PriceList = '7' inner join oitb t4 on t4.ItmsGrpCod = t1.ItmsGrpCod ";
+                //SQL += " left join Ortt t3 on t2.Currency = t3.Currency and t3.RateDate = '" + time.Year + (time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString()) + (time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString()) + "' ";
 
+
+                var SQL = param.SQLInventario + "'" + time.Year + (time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString()) + (time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString()) + "'";
                 SqlConnection Cn = new SqlConnection(g.DevuelveCadena());
                 SqlCommand Cmd = new SqlCommand(SQL, Cn);
                 SqlDataAdapter Da = new SqlDataAdapter(Cmd);
@@ -449,7 +451,7 @@ namespace WAConectorAPI.Controllers
                 time = time.AddHours(-DateTime.Now.Hour);
                 time = time.AddMinutes(-DateTime.Now.Minute);
                 time = time.AddSeconds(-(DateTime.Now.Second - 1));
-                var Inventario = db.Inventario.Where(a => a.skuid != null && a.skuid != ""  && a.FechaActPrec < time).Take(40).ToList();
+                var Inventario = db.Inventario.Where(a => a.skuid != null && a.skuid != "" && a.FechaActPrec < time/* && a.id == 668*/ ).Take(40).ToList();
 
                 foreach (var item in Inventario)
                 {
@@ -462,10 +464,13 @@ namespace WAConectorAPI.Controllers
 
                         putPrice change = new putPrice();
                         change.markup = 0;
-                        change.basePrice = float.Parse(item.Total.ToString()); 
- 
+                    change.basePrice = float.Parse(item.Total.ToString());
+                    //decimal imp = Convert.ToDecimal(0.13);
+                    //decimal impuesto = item.Total * imp;
+                    //change.basePrice = float.Parse((item.Total + impuesto).ToString());
 
-                        var httpContent = new StringContent(JsonConvert.SerializeObject(change), Encoding.UTF8, "application/json");
+
+                    var httpContent = new StringContent(JsonConvert.SerializeObject(change), Encoding.UTF8, "application/json");
 
                         HttpResponseMessage response = await cliente.PutAsync(path, httpContent);
 
