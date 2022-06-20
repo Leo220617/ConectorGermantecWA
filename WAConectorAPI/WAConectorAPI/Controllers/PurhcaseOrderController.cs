@@ -54,250 +54,266 @@ namespace WAConectorAPI.Controllers
 
                     foreach (var item in product.list)
                     {
-                        var registro = db.EncOrdenes.Where(a => a.orderid == item.orderId).FirstOrDefault();
-                        var registroH = db.EncOrdenesHistorico.Where(a => a.orderid == item.orderId).FirstOrDefault();
-
-                        if (registro == null && registroH == null)
+                        try
                         {
-                            HttpClient cliente2 = new HttpClient();
-                            cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
-                            cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppToken", param.APP_TOKEN);
 
-                            //string path2 = "https://germantecmex.vtexcommercestable.com.br/api/oms/pvt/orders/" + item.orderId;
-                            string path2 = param.urlOrdenVTEX + item.orderId;
-                            HttpResponseMessage response2 = await cliente2.GetAsync(path2);
+                       
+                            var registro = db.EncOrdenes.Where(a => a.orderid == item.orderId).FirstOrDefault();
+                            var registroH = db.EncOrdenesHistorico.Where(a => a.orderid == item.orderId).FirstOrDefault();
 
-                            detOrder detalle = new detOrder();
-                            if (response2.IsSuccessStatusCode)
+                            if (registro == null && registroH == null)
                             {
-                                detalle = await response2.Content.ReadAsAsync<detOrder>();
+                                HttpClient cliente2 = new HttpClient();
+                                cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
+                                cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppToken", param.APP_TOKEN);
 
-                            }
+                                //string path2 = "https://germantecmex.vtexcommercestable.com.br/api/oms/pvt/orders/" + item.orderId;
+                                string path2 = param.urlOrdenVTEX + item.orderId;
+                                HttpResponseMessage response2 = await cliente2.GetAsync(path2);
 
-                            if (item.hostname != "germantecpan")
-                            {
-                                EncOrdenes ordenes = new EncOrdenes();
-                                ordenes.orderid = item.orderId;
-                                ordenes.creationDate = item.creationDate;
-                                ordenes.clientName = item.clientName.TrimEnd(' '); ;
-                                ordenes.currencyCode = (item.currencyCode == "CRC" ? "COL" : item.currencyCode);
-                                ordenes.totalItems = item.totalItems;
-                                ordenes.telefono = detalle.clientProfileData.phone;
-                                ordenes.Correo = detalle.clientProfileData.email;
-                                ordenes.idVtex = detalle.clientProfileData.userProfileId;
-                                ordenes.Cedula = detalle.customData.customApps.Where(a => a.id == "profile-document").FirstOrDefault().fields.documentNew;
-                                ordenes.CreditCardNumber = detalle.paymentData.transactions[0].payments[0].lastDigits;
-                                ordenes.VoucherNum = detalle.paymentData.transactions[0].payments[0].connectorResponses.nsu;
-                                var SQL2 = "select top 1 CardCode from OCRD where E_Mail = '" + ordenes.Correo + "'";
-
-                                SqlConnection Cn2 = new SqlConnection(g.DevuelveCadena());
-                                SqlCommand Cmd2 = new SqlCommand(SQL2, Cn2);
-                                SqlDataAdapter Da2 = new SqlDataAdapter(Cmd2);
-                                DataSet Ds2 = new DataSet();
-                                Cn2.Open();
-                                Da2.Fill(Ds2, "Cliente");
-                                var CardCode = "";
-                                try
+                                detOrder detalle = new detOrder();
+                                if (response2.IsSuccessStatusCode)
                                 {
-                                    CardCode = Ds2.Tables["Cliente"].Rows[0]["CardCode"].ToString();
-                                    var client = (SAPbobsCOM.BusinessPartners)G.Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBusinessPartners);
-
-                                    var encontrado = client.GetByKey(CardCode);
-                                    if (encontrado)
-                                    {
-                                        client.CardName = ordenes.clientName;
-                                        client.FederalTaxID = ordenes.Cedula;
-                                        client.Phone1 = ordenes.telefono;
-
-
-                                        client.Addresses.Add();
-                                        client.Addresses.SetCurrentLine(0);
-
-                                        client.City = detalle.shippingData.address.city;
-                                        client.County = detalle.shippingData.address.country;
-                                        client.Address = (detalle.shippingData.address.street.Length > 49 ? detalle.shippingData.address.street.Substring(0, 49) : detalle.shippingData.address.street);
-
-                                        client.Addresses.AddressName = client.Address;
-                                        client.Addresses.City = detalle.shippingData.address.city;
-                                        client.Addresses.County = detalle.shippingData.address.country;
-                                        client.Addresses.Street = (detalle.shippingData.address.street.Length > 99 ? detalle.shippingData.address.street.Substring(0, 99) : detalle.shippingData.address.street);
-                                        client.Addresses.TypeOfAddress = "S";
-
-                                        var respuesta = client.Update();
-                                        if (respuesta != 0)
-                                        {
-                                            BitacoraErrores error = new BitacoraErrores();
-                                            error.Descripcion = G.Company.GetLastErrorDescription();
-                                            error.StackTrace = "Actualizacion del cliente en la factura " + ordenes.clientName;
-                                            error.Fecha = DateTime.Now;
-                                            db.BitacoraErrores.Add(error);
-                                            db.SaveChanges();
-                                            metodo.EnviarCorreo("Actualizacion del cliente en SAP", error.Descripcion, error.StackTrace);
-                                        }
-                                    }
+                                    detalle = await response2.Content.ReadAsAsync<detOrder>();
 
                                 }
-                                catch (Exception ex)
+
+                                if (item.hostname != "germantecpan")
                                 {
-                                     
+                                    EncOrdenes ordenes = new EncOrdenes();
+                                    ordenes.orderid = item.orderId;
+                                    ordenes.creationDate = item.creationDate;
+                                    ordenes.clientName = item.clientName.TrimEnd(' '); ;
+                                    ordenes.currencyCode = (item.currencyCode == "CRC" ? "COL" : item.currencyCode);
+                                    ordenes.totalItems = item.totalItems;
+                                    ordenes.telefono = detalle.clientProfileData.phone;
+                                    ordenes.Correo = detalle.clientProfileData.email;
+                                    ordenes.idVtex = detalle.clientProfileData.userProfileId;
+                                    ordenes.Cedula = (detalle.customData == null ? "00000000":detalle.customData.customApps.Where(a => a.id == "profile-document").FirstOrDefault().fields.documentNew);
+                                    ordenes.CreditCardNumber = detalle.paymentData.transactions[0].payments[0].lastDigits;
+                                    ordenes.VoucherNum = detalle.paymentData.transactions[0].payments[0].connectorResponses.nsu;
+                                    var SQL2 = "select top 1 CardCode from OCRD where E_Mail = '" + ordenes.Correo + "'";
+
+                                    SqlConnection Cn2 = new SqlConnection(g.DevuelveCadena());
+                                    SqlCommand Cmd2 = new SqlCommand(SQL2, Cn2);
+                                    SqlDataAdapter Da2 = new SqlDataAdapter(Cmd2);
+                                    DataSet Ds2 = new DataSet();
+                                    Cn2.Open();
+                                    Da2.Fill(Ds2, "Cliente");
+                                    var CardCode = "";
                                     try
                                     {
+                                        CardCode = Ds2.Tables["Cliente"].Rows[0]["CardCode"].ToString();
                                         var client = (SAPbobsCOM.BusinessPartners)G.Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBusinessPartners);
-                                        client.CardName = ordenes.clientName;
-                                        client.GroupCode = 130;
-                                        client.EmailAddress = ordenes.Correo;
-                                        client.Phone1 = ordenes.telefono;
-                                        client.FederalTaxID = ordenes.Cedula;
-                                        client.Series = 48;
-                                        client.Valid = BoYesNoEnum.tYES;
-                                        client.CardType = BoCardTypes.cCustomer;
-                                        client.Currency = "##";
+
+                                        var encontrado = client.GetByKey(CardCode);
+                                        if (encontrado)
+                                        {
+                                            client.CardName = ordenes.clientName;
+                                            client.FederalTaxID = ordenes.Cedula;
+                                            client.Phone1 = ordenes.telefono;
+
+
+                                            client.Addresses.Add();
+                                            client.Addresses.SetCurrentLine(0);
+
+                                            client.City = detalle.shippingData.address.city;
+                                            client.County = detalle.shippingData.address.country;
+                                            client.Address = (detalle.shippingData.address.street.Length > 49 ? detalle.shippingData.address.street.Substring(0, 49) : detalle.shippingData.address.street);
+
+                                            client.Addresses.AddressName = client.Address;
+                                            client.Addresses.City = detalle.shippingData.address.city;
+                                            client.Addresses.County = detalle.shippingData.address.country;
+                                            client.Addresses.Street = (detalle.shippingData.address.street.Length > 99 ? detalle.shippingData.address.street.Substring(0, 99) : detalle.shippingData.address.street);
+                                            client.Addresses.TypeOfAddress = "S";
+
+                                            var respuesta = client.Update();
+                                            if (respuesta != 0)
+                                            {
+                                                BitacoraErrores error = new BitacoraErrores();
+                                                error.Descripcion = G.Company.GetLastErrorDescription();
+                                                error.StackTrace = "Actualizacion del cliente en la factura " + ordenes.clientName;
+                                                error.Fecha = DateTime.Now;
+                                                db.BitacoraErrores.Add(error);
+                                                db.SaveChanges();
+                                                metodo.EnviarCorreo("Actualizacion del cliente en SAP", error.Descripcion, error.StackTrace);
+                                            }
+                                        }
+
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                     
+                                        try
+                                        {
+                                            var client = (SAPbobsCOM.BusinessPartners)G.Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBusinessPartners);
+                                            client.CardName = ordenes.clientName;
+                                            client.GroupCode = 130;
+                                            client.EmailAddress = ordenes.Correo;
+                                            client.Phone1 = ordenes.telefono;
+                                            client.FederalTaxID = ordenes.Cedula;
+                                            client.Series = 48;
+                                            client.Valid = BoYesNoEnum.tYES;
+                                            client.CardType = BoCardTypes.cCustomer;
+                                            client.Currency = "##";
 
 
                                         
-                                        client.Addresses.SetCurrentLine(0);
+                                            client.Addresses.SetCurrentLine(0);
 
-                                        client.City = detalle.shippingData.address.city;
-                                        client.County = detalle.shippingData.address.country;
-                                        client.Address = (detalle.shippingData.address.street.Length > 49 ? detalle.shippingData.address.street.Substring(0, 49) : detalle.shippingData.address.street);
+                                            client.City = detalle.shippingData.address.city;
+                                            client.County = detalle.shippingData.address.country;
+                                            client.Address = (detalle.shippingData.address.street.Length > 49 ? detalle.shippingData.address.street.Substring(0, 49) : detalle.shippingData.address.street);
                                     
-                                        client.Addresses.AddressName = client.Address;
-                                        client.Addresses.City = detalle.shippingData.address.city;
-                                        client.Addresses.County = detalle.shippingData.address.country;
-                                        client.Addresses.Street = (detalle.shippingData.address.street.Length > 99 ? detalle.shippingData.address.street.Substring(0, 99) : detalle.shippingData.address.street);
-                                        client.Addresses.TypeOfAddress = "S";
-                                        client.Addresses.Add();
+                                            client.Addresses.AddressName = client.Address;
+                                            client.Addresses.City = detalle.shippingData.address.city;
+                                            client.Addresses.County = detalle.shippingData.address.country;
+                                            client.Addresses.Street = (detalle.shippingData.address.street.Length > 99 ? detalle.shippingData.address.street.Substring(0, 99) : detalle.shippingData.address.street);
+                                            client.Addresses.TypeOfAddress = "S";
+                                            client.Addresses.Add();
 
-                                        var respuest = client.Add();
+                                            var respuest = client.Add();
 
-                                        if (respuest != 0)
+                                            if (respuest != 0)
+                                            {
+                                                BitacoraErrores error = new BitacoraErrores();
+                                                error.Descripcion = G.Company.GetLastErrorDescription();
+                                                error.StackTrace = "Insercion del cliente en la factura " + ordenes.clientName;
+                                                error.Fecha = DateTime.Now;
+                                                db.BitacoraErrores.Add(error);
+                                                db.SaveChanges();
+                                                metodo.EnviarCorreo("Insercion del cliente en SAP", error.Descripcion, error.StackTrace);
+                                            }
+
+                                        }
+                                        catch (Exception ex1)
                                         {
                                             BitacoraErrores error = new BitacoraErrores();
-                                            error.Descripcion = G.Company.GetLastErrorDescription();
-                                            error.StackTrace = "Insercion del cliente en la factura " + ordenes.clientName;
+                                            error.Descripcion = ex1.Message;
+                                            error.StackTrace = "Insercion del cliente en la factura " + ex1.StackTrace;
                                             error.Fecha = DateTime.Now;
                                             db.BitacoraErrores.Add(error);
                                             db.SaveChanges();
                                             metodo.EnviarCorreo("Insercion del cliente en SAP", error.Descripcion, error.StackTrace);
                                         }
 
+
+
+
                                     }
-                                    catch (Exception ex1)
+                                    Cn2.Close();
+
+                                    ordenes.ProcesadaSAP = false;
+                                    ordenes.Impuestos = ToDecimal(detalle.totals[3].value);
+                                    ordenes.Descuento = Math.Abs((detalle.totals[1].value != 0 ? ToDecimal(detalle.totals[1].value) : 0));
+                                    ordenes.Subtotal = ToDecimal(detalle.totals[0].value) - ordenes.Descuento;
+                                    ordenes.Envio = ToDecimal(detalle.totals[2].value);
+                                    ordenes.Total = ToDecimal(detalle.value);
+                                    ordenes.Comments = detalle.shippingData.address.country + ", " + detalle.shippingData.address.city + ", " + detalle.shippingData.address.street + ", " + detalle.shippingData.address.complement;
+                                    foreach (var item2 in detalle.items)
                                     {
-                                        BitacoraErrores error = new BitacoraErrores();
-                                        error.Descripcion = ex1.Message;
-                                        error.StackTrace = "Insercion del cliente en la factura " + ex1.StackTrace;
-                                        error.Fecha = DateTime.Now;
-                                        db.BitacoraErrores.Add(error);
-                                        db.SaveChanges();
-                                        metodo.EnviarCorreo("Insercion del cliente en SAP", error.Descripcion, error.StackTrace);
-                                    }
-
-
-
-
-                                }
-                                Cn2.Close();
-
-                                ordenes.ProcesadaSAP = false;
-                                ordenes.Impuestos = ToDecimal(detalle.totals[3].value);
-                                ordenes.Descuento = Math.Abs((detalle.totals[1].value != 0 ? ToDecimal(detalle.totals[1].value) : 0));
-                                ordenes.Subtotal = ToDecimal(detalle.totals[0].value) - ordenes.Descuento;
-                                ordenes.Envio = ToDecimal(detalle.totals[2].value);
-                                ordenes.Total = ToDecimal(detalle.value);
-                                ordenes.Comments = detalle.shippingData.address.country + ", " + detalle.shippingData.address.city + ", " + detalle.shippingData.address.street + ", " + detalle.shippingData.address.complement;
-                                foreach (var item2 in detalle.items)
-                                {
-                                    DetOrdenes detOrd = new DetOrdenes();
-                                    detOrd.orderid = detalle.orderId;
-                                    detOrd.Descuento = (item2.priceTags[0].value < 0 ? ToDecimal(Math.Abs(item2.priceTags[0].value)) : 0);
-                                    detOrd.Impuestos = ToDecimal(item2.tax);
-                                    var descont = (item2.priceTags[0].value < 0 ? Math.Abs(item2.priceTags[0].value) : 0);
-                                    detOrd.SubTotal = ToDecimal((item2.quantity * item2.price) - Convert.ToDouble(descont));
-                                    detOrd.Total = detOrd.Impuestos + detOrd.SubTotal;
-                                    detOrd.TaxCode = (detOrd.Descuento > 0 ? item2.priceTags[1].value : item2.priceTags[0].value);
-                                    detOrd.itemid = item2.productId;
-                                    detOrd.itemCode = item2.refId;
-                                    detOrd.unitPrice = ToDecimal(item2.price);
-                                    detOrd.quantity = item2.quantity;
+                                        DetOrdenes detOrd = new DetOrdenes();
+                                        detOrd.orderid = detalle.orderId;
+                                        detOrd.Descuento = (item2.priceTags[0].value < 0 ? ToDecimal(Math.Abs(item2.priceTags[0].value)) : 0);
+                                        detOrd.Impuestos = ToDecimal(item2.tax);
+                                        var descont = (item2.priceTags[0].value < 0 ? Math.Abs(item2.priceTags[0].value) : 0);
+                                        detOrd.SubTotal = ToDecimal((item2.quantity * item2.price) - Convert.ToDouble(descont));
+                                        detOrd.Total = detOrd.Impuestos + detOrd.SubTotal;
+                                        detOrd.TaxCode = (detOrd.Descuento > 0 ? item2.priceTags[1].value : item2.priceTags[0].value);
+                                        detOrd.itemid = item2.productId;
+                                        detOrd.itemCode = item2.refId;
+                                        detOrd.unitPrice = ToDecimal(item2.price);
+                                        detOrd.quantity = item2.quantity;
                                     
-                                    var SQL = " select top 1 U_BOD_VT from oitm where ItemCode like '%" + detOrd.itemCode + "%'";
+                                        var SQL = " select top 1 U_BOD_VT from oitm where ItemCode like '%" + detOrd.itemCode + "%'";
 
-                                    SqlConnection Cn = new SqlConnection(g.DevuelveCadena());
-
-
-                                    SqlCommand Cmd = new SqlCommand(SQL, Cn);
-                                    SqlDataAdapter Da = new SqlDataAdapter(Cmd);
-
-                                    DataSet Ds = new DataSet();
+                                        SqlConnection Cn = new SqlConnection(g.DevuelveCadena());
 
 
+                                        SqlCommand Cmd = new SqlCommand(SQL, Cn);
+                                        SqlDataAdapter Da = new SqlDataAdapter(Cmd);
 
-                                    Cn.Open();
+                                        DataSet Ds = new DataSet();
 
-                                    Da.Fill(Ds, "warehouse");
 
-                                    var warehouse = "";
-                                    try
-                                    {
-                                        warehouse = Ds.Tables["warehouse"].Rows[0]["U_BOD_VT"].ToString();
 
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        BitacoraErrores error = new BitacoraErrores();
-                                        error.Descripcion = "No existe bodega vtex en el articulo " + " => " + detOrd.itemCode;
-                                        error.StackTrace = "Insercion de la orden en la parte de select";
-                                        error.Fecha = DateTime.Now;
-                                        db.BitacoraErrores.Add(error);
+                                        Cn.Open();
+
+                                        Da.Fill(Ds, "warehouse");
+
+                                        var warehouse = "";
+                                        try
+                                        {
+                                            warehouse = Ds.Tables["warehouse"].Rows[0]["U_BOD_VT"].ToString();
+
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            BitacoraErrores error = new BitacoraErrores();
+                                            error.Descripcion = "No existe bodega vtex en el articulo " + " => " + detOrd.itemCode;
+                                            error.StackTrace = "Insercion de la orden en la parte de select";
+                                            error.Fecha = DateTime.Now;
+                                            db.BitacoraErrores.Add(error);
+                                            db.SaveChanges();
+
+                                            metodo.EnviarCorreo("Bodega VTEX", error.Descripcion, error.StackTrace);
+                                        }
+
+                                        Cn.Close();
+
+                                        //if (String.IsNullOrEmpty(warehouse))
+                                        //{
+                                        //    throw new Exception("No se encontró la bodega");
+                                        //}
+
+
+                                        detOrd.WarehouseCode = warehouse;
+
+
+                                        db.DetOrdenes.Add(detOrd);
                                         db.SaveChanges();
 
-                                        metodo.EnviarCorreo("Bodega VTEX", error.Descripcion, error.StackTrace);
                                     }
 
-                                    Cn.Close();
+                                    if (ordenes.Envio > 0)
+                                    {
+                                        DetOrdenes detOrd = new DetOrdenes();
+                                        detOrd.orderid = detalle.orderId;
+                                        detOrd.Descuento = 0;
+                                        detOrd.Impuestos = ordenes.Envio * Convert.ToDecimal(0.13);
+                                        detOrd.SubTotal = ordenes.Envio;
+                                        detOrd.Total = detOrd.Impuestos + detOrd.SubTotal;
+                                        detOrd.TaxCode = 13;
+                                        detOrd.itemid = "C0-000-056";
+                                        detOrd.itemCode = "C0-000-056";
+                                        detOrd.unitPrice = ordenes.Envio;
+                                        detOrd.quantity = 1;
 
-                                    //if (String.IsNullOrEmpty(warehouse))
-                                    //{
-                                    //    throw new Exception("No se encontró la bodega");
-                                    //}
+
+                                        detOrd.WarehouseCode = "07";
 
 
-                                    detOrd.WarehouseCode = warehouse;
+                                        db.DetOrdenes.Add(detOrd);
+                                        db.SaveChanges();
+                                    }
 
-
-                                    db.DetOrdenes.Add(detOrd);
+                                    db.EncOrdenes.Add(ordenes);
                                     db.SaveChanges();
-
-                                }
-
-                                if (ordenes.Envio > 0)
-                                {
-                                    DetOrdenes detOrd = new DetOrdenes();
-                                    detOrd.orderid = detalle.orderId;
-                                    detOrd.Descuento = 0;
-                                    detOrd.Impuestos = ordenes.Envio * Convert.ToDecimal(0.13);
-                                    detOrd.SubTotal = ordenes.Envio;
-                                    detOrd.Total = detOrd.Impuestos + detOrd.SubTotal;
-                                    detOrd.TaxCode = 13;
-                                    detOrd.itemid = "C0-000-056";
-                                    detOrd.itemCode = "C0-000-056";
-                                    detOrd.unitPrice = ordenes.Envio;
-                                    detOrd.quantity = 1;
-
-
-                                    detOrd.WarehouseCode = "07";
-
-
-                                    db.DetOrdenes.Add(detOrd);
-                                    db.SaveChanges();
-                                }
-
-                                db.EncOrdenes.Add(ordenes);
-                                db.SaveChanges();
                             
-                            }
+                                }
 
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+
+                            BitacoraErrores error = new BitacoraErrores();
+                            error.Descripcion = ex.Message;
+                            error.StackTrace = "Insercion de la orden "+ item.orderId + " " + ex.StackTrace.ToString();
+                            error.Fecha = DateTime.Now;
+                            db.BitacoraErrores.Add(error);
+                            db.SaveChanges();
+                            metodo.EnviarCorreo("Insercion de la orden", error.Descripcion, error.StackTrace);
                         }
                     }
                 }
@@ -308,7 +324,7 @@ namespace WAConectorAPI.Controllers
             {
                 BitacoraErrores error = new BitacoraErrores();
                 error.Descripcion = ex.Message;
-                error.StackTrace = "Insercion de la orden";
+                error.StackTrace = "Insercion de la orden" + " " + ex.StackTrace.ToString();
                 error.Fecha = DateTime.Now;
                 db.BitacoraErrores.Add(error);
                 db.SaveChanges();

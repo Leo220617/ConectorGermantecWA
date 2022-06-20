@@ -55,7 +55,7 @@
     <Reference Include="Interop.SAPbobsCOM, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>D:\DyD Consultores\Componente sap\2012\Interop.SAPbobsCOM.dll</HintPath>
+      <HintPath>..\..\..\GestionGastosDyD\GestionGastos\Sicsoft.Checkin.Web\Interop.SAPbobsCOM.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
