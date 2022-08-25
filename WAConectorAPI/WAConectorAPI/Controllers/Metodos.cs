@@ -13,6 +13,18 @@ namespace WAConectorAPI.Controllers
     {
         ModelCliente db = new ModelCliente();
 
+        public void GuardarTxt(string nombreArchivo, string texto)
+        {
+            try
+            {
+                texto = (DateTime.Now.ToString("dd/MM/yyyy HH:mm") + " " + texto + Environment.NewLine + "------------------------------------------" + Environment.NewLine);
+                System.IO.File.AppendAllText(HttpContext.Current.Server.MapPath("~") + @"\Bitacora\" + nombreArchivo, texto);
+
+
+            }
+            catch { }
+        }
+
         public bool SendV2(string para, string copia, string copiaOculta, string de, string displayName, string asunto,
            string html, string HostServer, int Puerto, bool EnableSSL, string UserName, string Password, List<Attachment> ArchivosAdjuntos = null)
         {

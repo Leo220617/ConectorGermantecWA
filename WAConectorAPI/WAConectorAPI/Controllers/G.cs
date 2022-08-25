@@ -13,6 +13,7 @@ namespace WAConectorAPI.Controllers
         public readonly static G _instance = new G();
         public static Company _company = null;
         ModelCliente db = new ModelCliente();
+        Metodos Metodos = new Metodos();
         private static G Instance
         {
             get
@@ -52,6 +53,8 @@ namespace WAConectorAPI.Controllers
             if (resp != 0)
             {
                 var msg = _company.GetLastErrorDescription();
+                Metodos.GuardarTxt("BitacoraConexion.txt", msg);
+
                 return -1;
             }
 
