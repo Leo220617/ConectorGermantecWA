@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using WAConectorAPI.Models.ModelCliente;
 
@@ -23,6 +25,38 @@ namespace WAConectorAPI.Controllers
 
             }
             catch { }
+        }
+        public int timeSpan()
+        {
+            try
+            {
+                var st = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                var t = (DateTime.Now.ToUniversalTime() - st);
+                return Convert.ToInt32((t.TotalMilliseconds) / 1000);
+            }
+            catch (Exception)
+            {
+
+                return 0;
+            }
+        }
+         
+        public string SHA24Metodo(string rawData)
+        {
+            // Create a SHA256   
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
+
+                // Convert byte array to a string   
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+               return builder.ToString();
+            }
         }
 
         public bool SendV2(string para, string copia, string copiaOculta, string de, string displayName, string asunto,

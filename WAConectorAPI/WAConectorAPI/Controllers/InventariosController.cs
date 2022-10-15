@@ -15,7 +15,7 @@ using WAConectorAPI.Models.Vtex;
 
 namespace WAConectorAPI.Controllers
 {
-    public class InventariosController: ApiController
+    public class InventariosController : ApiController
     {
         G g = new G();
         ModelCliente db = new ModelCliente();
@@ -25,7 +25,7 @@ namespace WAConectorAPI.Controllers
             try
             {
                 string sql = " select ";
-                if(filtro != null && filtro.top > 0)
+                if (filtro != null && filtro.top > 0)
                 {
                     sql += " top " + filtro.top + " ";
                 }
@@ -33,7 +33,7 @@ namespace WAConectorAPI.Controllers
                 sql += " inner join OWHS t1 on t0.WhsCode = t1.WhsCode ";
                 sql += " inner join OITM t3 on t0.ItemCode = t3.ItemCode where t0.WhsCode = T3.U_Bod_VT  "; // Este where nos trae solo los que tienen una bodega asignada
 
-                if(filtro != null)
+                if (filtro != null)
                 {
                     //if(!string.IsNullOrEmpty(filtro.ItemCode) || !string.IsNullOrEmpty(filtro.WhsCodeList))
                     //{
@@ -42,9 +42,9 @@ namespace WAConectorAPI.Controllers
                     //}
 
 
-                    if(!string.IsNullOrEmpty(filtro.ItemCode))
+                    if (!string.IsNullOrEmpty(filtro.ItemCode))
                     {
-                        sql += " and t0.ItemCode = '" + filtro.ItemCode + "' "/* + (!string.IsNullOrEmpty(filtro.WhsCodeList) ? " and ": "")*/; 
+                        sql += " and t0.ItemCode = '" + filtro.ItemCode + "' "/* + (!string.IsNullOrEmpty(filtro.WhsCodeList) ? " and ": "")*/;
 
                     }
 
@@ -93,7 +93,7 @@ namespace WAConectorAPI.Controllers
                 }
                 sql += " t0.Currency, t0.ItemCode, t1.AvgPrice ItemCost, t0.Price, t0.PriceList PriceListId   from ITM1 t0  ";
                 sql += " inner join OITM t1 on t0.ItemCode = t1.ItemCode where t1.U_Bod_VT is not null ";
-            
+
 
                 if (filtro != null)
                 {
@@ -106,11 +106,11 @@ namespace WAConectorAPI.Controllers
 
                     if (!string.IsNullOrEmpty(filtro.PriceListCode))
                     {
-                        sql += " and t0.PriceList = '" + filtro.PriceListCode + "' "  ;
+                        sql += " and t0.PriceList = '" + filtro.PriceListCode + "' ";
 
                     }
 
- 
+
 
 
                 }
@@ -244,14 +244,15 @@ namespace WAConectorAPI.Controllers
                                 }
                             }
                             //Aca terminamos de encontrar la informacion del producto
-
+                            inventario.Ingo = false;
+                            inventario.Unimart = false;
                             db.Inventario.Add(inventario);
                             db.SaveChanges();
                         }
                         else
                         {
                             db.Entry(inventario).State = System.Data.Entity.EntityState.Modified;
-                            if(string.IsNullOrEmpty(inventario.skuid))
+                            if (string.IsNullOrEmpty(inventario.skuid))
                             {
                                 //Aca nosotros encontramos cual es el skuid en vtex 
                                 HttpClient cliente2 = new HttpClient();
@@ -286,7 +287,7 @@ namespace WAConectorAPI.Controllers
 
 
                             //Aca nosotros encontramos la informacion del producto
-                            if(!string.IsNullOrEmpty(inventario.skuid) && string.IsNullOrEmpty(inventario.Imagen))
+                            if (!string.IsNullOrEmpty(inventario.skuid) && string.IsNullOrEmpty(inventario.Imagen))
                             {
                                 try
                                 {
@@ -321,7 +322,7 @@ namespace WAConectorAPI.Controllers
                                     db.SaveChanges();
                                 }
                             }
-                             //Aca terminamos de encontrar la informacion del producto
+                            //Aca terminamos de encontrar la informacion del producto
 
                             db.SaveChanges();
                         }
@@ -337,7 +338,7 @@ namespace WAConectorAPI.Controllers
                         db.SaveChanges();
                         metodo.EnviarCorreo("Insercion del inventario en la tabla media", error.Descripcion, error.StackTrace);
                     }
-                   
+
 
                 }
 
@@ -368,15 +369,22 @@ namespace WAConectorAPI.Controllers
             try
             {
                 Parametros param = db.Parametros.FirstOrDefault();
+
+                Unimart unimart = new Unimart();
+                unimart.u_public_key = param.UnimartKEY;
+                unimart.u_timestamp = metodo.timeSpan();
+                var Concatenado = param.UnimartKEY + param.UnimartSecret + unimart.u_timestamp;
+                unimart.u_signature = metodo.SHA24Metodo(Concatenado);
+                unimart.u_products = new List<u_products>();
                 DateTime time = DateTime.Now;
                 time = time.AddHours(-DateTime.Now.Hour);
-               time = time.AddMinutes(-DateTime.Now.Minute);
+                time = time.AddMinutes(-DateTime.Now.Minute);
                 time = time.AddSeconds(-(DateTime.Now.Second - 1));
-                var Inventario = db.Inventario.Where(a => a.skuid != null && a.skuid != "" && a.FechaActualizacion < time ).Take(40).ToList();
+                var Inventario = db.Inventario.Where(a => a.skuid != null && a.skuid != "" && a.FechaActualizacion < time).Take(40).ToList();
 
                 foreach (var item in Inventario)
                 {
-                    if(item.Stock >= 0)
+                    if (item.Stock >= 0)
                     {
                         HttpClient cliente = new HttpClient();
                         cliente.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
@@ -415,13 +423,59 @@ namespace WAConectorAPI.Controllers
                             metodo.EnviarCorreo("Actualizacion en VTEX", error.Descripcion, error.StackTrace);
                         }
 
-                       
+
                     }
-                   
+
+
+
+                    ///Mandar a unimart
+                    ///
+
+                    if (item.Stock >= 0 && item.Unimart)
+                    {
+
+                        u_products prod = new u_products();
+                        prod.sku = item.ItemCode;
+                        prod.quantity = Convert.ToInt32(item.Stock);
+                        prod.unit_cost = Convert.ToInt32(item.Precio).ToString();
+
+                        unimart.u_products.Add(prod);
+
+                    }
+
+
 
                 }
 
-                
+
+                ///ap i unimart
+                ///
+                HttpClient cliente2 = new HttpClient();
+
+                string path2 = param.UrlUnimart;
+                var httpContent2 = new StringContent(JsonConvert.SerializeObject(unimart), Encoding.UTF8, "application/json");
+                try
+                {
+                    HttpResponseMessage response2 = await cliente2.PostAsync(path2, httpContent2);
+
+
+                    if (response2.IsSuccessStatusCode)
+                    {
+                        
+                       
+                    }
+                }
+                catch (Exception ex)
+                {
+                    BitacoraErrores error = new BitacoraErrores();
+                    error.Descripcion = ex.Message;
+                    error.StackTrace = "Actualizacion en UNIMART del articulo ";
+                    error.Fecha = DateTime.Now;
+                    db.BitacoraErrores.Add(error);
+                    db.SaveChanges();
+                    metodo.EnviarCorreo("Actualizacion en UNIMART", error.Descripcion, error.StackTrace);
+                }
+
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -438,6 +492,7 @@ namespace WAConectorAPI.Controllers
             }
         }
 
+        
         /////////////////////////////////////////////////UPDATE EN VTEX PRICE///////////////////////////////////
         ///
 
@@ -455,15 +510,15 @@ namespace WAConectorAPI.Controllers
 
                 foreach (var item in Inventario)
                 {
-                    
-                        HttpClient cliente = new HttpClient();
-                        cliente.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
-                        cliente.DefaultRequestHeaders.Add("X-VTEX-API-AppToken", param.APP_TOKEN);
 
-                        string path = param.urlActualizarPrecio + item.skuid;
+                    HttpClient cliente = new HttpClient();
+                    cliente.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
+                    cliente.DefaultRequestHeaders.Add("X-VTEX-API-AppToken", param.APP_TOKEN);
 
-                        putPrice change = new putPrice();
-                        change.markup = 0;
+                    string path = param.urlActualizarPrecio + item.skuid;
+
+                    putPrice change = new putPrice();
+                    change.markup = 0;
                     change.basePrice = float.Parse(item.Total.ToString());
                     //decimal imp = Convert.ToDecimal(0.13);
                     //decimal impuesto = item.Total * imp;
@@ -472,11 +527,11 @@ namespace WAConectorAPI.Controllers
 
                     var httpContent = new StringContent(JsonConvert.SerializeObject(change), Encoding.UTF8, "application/json");
 
-                        HttpResponseMessage response = await cliente.PutAsync(path, httpContent);
+                    HttpResponseMessage response = await cliente.PutAsync(path, httpContent);
 
 
-                        if (response.IsSuccessStatusCode)
-                        {
+                    if (response.IsSuccessStatusCode)
+                    {
                         //product = await response.Content.ReadAsAsync<ListaOrdenes>();
                         db.Entry(item).State = System.Data.Entity.EntityState.Modified;
                         item.FechaActPrec = DateTime.Now;
@@ -492,7 +547,7 @@ namespace WAConectorAPI.Controllers
                         db.SaveChanges();
                         metodo.EnviarCorreo("Actualizacion de precios en VTEX", error.Descripcion, error.StackTrace);
                     }
-                
+
 
 
                 }

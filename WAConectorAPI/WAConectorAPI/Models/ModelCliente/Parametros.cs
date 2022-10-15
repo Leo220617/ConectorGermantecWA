@@ -21,5 +21,8 @@ namespace WAConectorAPI.Models.ModelCliente
         public string urlInventarioInfo { get; set; }
         public string IngoToken { get; set; }
         public string SQLInventario { get; set; }
+        public string UnimartKEY { get; set; }
+        public string UnimartSecret { get; set; }
+        public string UrlUnimart { get; set; }
     }
 }

@@ -30,5 +30,6 @@ namespace WAConectorAPI.Models.ModelCliente
         public string Imagen { get; set; }
         public string Familia { get; set; }
         public bool Ingo { get; set; }
+        public bool Unimart { get; set; }
     }
 }
