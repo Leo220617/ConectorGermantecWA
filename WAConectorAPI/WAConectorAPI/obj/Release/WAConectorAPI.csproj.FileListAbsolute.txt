@@ -377,8 +377,8 @@ C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\
 C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\es\System.Web.WebPages.resources.dll
 C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\bin\es\System.Web.WebPages.Razor.resources.dll
-C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.csprojAssemblyReference.cache
 C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.csproj.CoreCompileInputs.cache
 C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.csproj.CopyComplete
 C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.dll
 C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.pdb
+C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.csproj.AssemblyReference.cache
