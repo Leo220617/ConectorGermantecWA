@@ -22,6 +22,8 @@ namespace WAConectorAPI.Models.ModelCliente
         public virtual DbSet<Parametros> Parametros { get; set; }
         public virtual DbSet<InventariosBodegas> InventariosBodegas { get; set; }
         public virtual DbSet<EnvioCorreos> EnvioCorreos { get; set; }
+        public virtual DbSet<InventarioUnimart> InventarioUnimart { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

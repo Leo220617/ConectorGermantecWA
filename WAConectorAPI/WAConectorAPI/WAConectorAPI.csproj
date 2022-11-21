@@ -201,6 +201,7 @@
     <Compile Include="Models\ModelCliente\EnvioCorreos.cs" />
     <Compile Include="Models\ModelCliente\Inventario.cs" />
     <Compile Include="Models\ModelCliente\InventariosBodegas.cs" />
+    <Compile Include="Models\ModelCliente\InventarioUnimart.cs" />
     <Compile Include="Models\ModelCliente\Login.cs" />
     <Compile Include="Models\ModelCliente\ModelCliente.cs" />
     <Compile Include="Models\ModelCliente\Parametros.cs" />

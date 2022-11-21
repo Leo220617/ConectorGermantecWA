@@ -153,9 +153,9 @@ namespace WAConectorAPI.Controllers
                 //SQL += " inner join itm1 t2 on t0.ItemCode = t2.ItemCode and t2.PriceList = '7' inner join oitb t4 on t4.ItmsGrpCod = t1.ItmsGrpCod ";
                 //SQL += " left join Ortt t3 on t2.Currency = t3.Currency and t3.RateDate = '" + time.Year + (time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString()) + (time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString()) + "' ";
 
-
+                var conexion = g.DevuelveCadena();
                 var SQL = param.SQLInventario + "'" + time.Year + (time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString()) + (time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString()) + "'";
-                SqlConnection Cn = new SqlConnection(g.DevuelveCadena());
+                SqlConnection Cn = new SqlConnection(conexion);
                 SqlCommand Cmd = new SqlCommand(SQL, Cn);
                 SqlDataAdapter Da = new SqlDataAdapter(Cmd);
                 DataSet Ds = new DataSet();
@@ -344,6 +344,138 @@ namespace WAConectorAPI.Controllers
 
                 Cn.Close();
 
+
+                //Unimart
+
+                SQL = param.SQLInventarioUnimart;
+                Cn = new SqlConnection(conexion);
+                Cmd = new SqlCommand(SQL, Cn);
+                Da = new SqlDataAdapter(Cmd);
+                Ds = new DataSet();
+                Cn.Open();
+                Da.Fill(Ds, "Inventario");
+                foreach (DataRow item in Ds.Tables["Inventario"].Rows)
+                {
+
+                    string itemCode = item["ItemCode"].ToString();
+                    InventarioUnimart inventario = db.InventarioUnimart.Where(a => a.ItemCode == itemCode).FirstOrDefault();
+                    try
+                    {
+                        if (inventario == null)
+                        {
+                            inventario = new InventarioUnimart();
+                            inventario.ItemCode = item["ItemCode"].ToString();
+                            inventario.ItemName = item["ItemName"].ToString();
+                            inventario.WhsCode = item["WhsCode"].ToString();
+
+
+
+
+                            inventario.skuid = "";
+
+
+                            inventario.Familia = item["ItmsGrpNam"].ToString();
+                            inventario.OnHand = Convert.ToDecimal(item["OnHand"].ToString());
+                            inventario.IsCommited = Convert.ToDecimal(item["IsCommited"].ToString());
+                            inventario.Stock = (Convert.ToDecimal(item["Stock"].ToString()) < 0 ? 0 : Convert.ToDecimal(item["Stock"].ToString()));
+                            inventario.Precio = Convert.ToDecimal(item["Price"].ToString());
+                            inventario.Currency = (item["Currency"].ToString() == "" ? "COL" : item["Currency"].ToString());
+                            inventario.TipoCambio = ((item["Rate"].ToString() == "" && inventario.Currency == "COL") ? 1 : Convert.ToDecimal(item["Rate"].ToString()));
+                            inventario.FechaActPrec = time.AddDays(-1);
+                            inventario.FechaActualizacion = time.AddDays(-1);
+                            inventario.Total = inventario.Precio * inventario.TipoCambio;
+
+                            //Aca nosotros encontramos la informacion del producto
+
+                            try
+                            {
+
+
+
+                                inventario.Descripcion = "";
+                                inventario.Marca = "";
+                                inventario.Imagen = "";
+                            }
+                            catch (Exception ex)
+                            {
+
+                                BitacoraErrores error = new BitacoraErrores();
+                                error.Descripcion = ex.Message + " -> " + itemCode;
+                                error.StackTrace = "Insercion del inventario en la tabla media informacion " + ex.StackTrace.ToString();
+                                error.Fecha = DateTime.Now;
+                                db.BitacoraErrores.Add(error);
+                                db.SaveChanges();
+                            }
+
+                            //Aca terminamos de encontrar la informacion del producto
+                            inventario.Ingo = false;
+                            inventario.Unimart = true;
+                            db.InventarioUnimart.Add(inventario);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            db.Entry(inventario).State = System.Data.Entity.EntityState.Modified;
+
+
+
+                            inventario.skuid = "";
+
+
+                            inventario.Familia = item["ItmsGrpNam"].ToString();
+                            inventario.OnHand = Convert.ToDecimal(item["OnHand"].ToString());
+                            inventario.IsCommited = Convert.ToDecimal(item["IsCommited"].ToString());
+                            inventario.Stock = (Convert.ToDecimal(item["Stock"].ToString()) < 0 ? 0 : Convert.ToDecimal(item["Stock"].ToString()));
+                            inventario.Precio = Convert.ToDecimal(item["Price"].ToString());
+                            inventario.Currency = item["Currency"].ToString();
+                            inventario.TipoCambio = ((item["Rate"].ToString() == "" && inventario.Currency == "COL") ? 1 : (item["Rate"].ToString() == "" && inventario.Currency != "COL") ? inventario.TipoCambio : Convert.ToDecimal(item["Rate"].ToString()));
+
+                            inventario.Total = inventario.Precio * inventario.TipoCambio;
+
+
+                            //Aca nosotros encontramos la informacion del producto
+
+                            try
+                            {
+
+
+                                inventario.Descripcion = "";
+                                inventario.Marca = "";
+                                inventario.Imagen = "";
+                            }
+                            catch (Exception ex)
+                            {
+
+                                BitacoraErrores error = new BitacoraErrores();
+                                error.Descripcion = ex.Message + " -> " + itemCode;
+                                error.StackTrace = "Insercion del inventario en la tabla media informacion " + ex.StackTrace;
+                                error.Fecha = DateTime.Now;
+                                db.BitacoraErrores.Add(error);
+                                db.SaveChanges();
+                            }
+
+                            //Aca terminamos de encontrar la informacion del producto
+
+                            db.SaveChanges();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        BitacoraErrores error = new BitacoraErrores();
+                        error.Descripcion = ex.Message + " -> " + itemCode;
+                        error.StackTrace = "Insercion del inventario en la tabla media";
+                        error.Fecha = DateTime.Now;
+                        db.BitacoraErrores.Add(error);
+                        db.SaveChanges();
+                        metodo.EnviarCorreo("Insercion del inventario en la tabla media", error.Descripcion, error.StackTrace);
+                    }
+
+
+                }
+
+                Cn.Close();
+
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
@@ -428,9 +560,19 @@ namespace WAConectorAPI.Controllers
 
 
 
-                    ///Mandar a unimart
-                    ///
+                   
 
+
+
+                }
+
+
+                //UNIMART INVENTARIO
+
+                var InventarioUnimart = db.InventarioUnimart.Where(a => a.FechaActualizacion < time).Take(40).ToList();
+
+                foreach(var item in InventarioUnimart)
+                {
                     if (item.Stock >= 0 && item.Unimart)
                     {
 
@@ -441,10 +583,10 @@ namespace WAConectorAPI.Controllers
 
                         unimart.u_products.Add(prod);
 
+                        db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                        item.FechaActualizacion = DateTime.Now;
+                        db.SaveChanges();
                     }
-
-
-
                 }
 
 
@@ -461,8 +603,8 @@ namespace WAConectorAPI.Controllers
 
                     if (response2.IsSuccessStatusCode)
                     {
-                        
-                       
+
+
                     }
                 }
                 catch (Exception ex)
@@ -492,7 +634,7 @@ namespace WAConectorAPI.Controllers
             }
         }
 
-        
+
         /////////////////////////////////////////////////UPDATE EN VTEX PRICE///////////////////////////////////
         ///
 
