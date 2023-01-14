@@ -391,11 +391,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>08/23/2022 15:01:29</publishTime>
     </File>
     <File Include="Web.config">
-<<<<<<< Updated upstream
-      <publishTime>08/23/2022 15:12:29</publishTime>
-=======
       <publishTime>10/06/2022 16:55:29</publishTime>
->>>>>>> Stashed changes
     </File>
   </ItemGroup>
 </Project>

@@ -220,6 +220,17 @@ namespace WAConectorAPI.Controllers
                                         detOrd.SubTotal = ToDecimal((item2.quantity * item2.price) - Convert.ToDouble(descont));
                                         detOrd.Total = detOrd.Impuestos + detOrd.SubTotal;
                                         detOrd.TaxCode = (detOrd.Descuento > 0 ? item2.priceTags[1].value : item2.priceTags[0].value);
+                                        if(detOrd.Impuestos == 0)
+                                        {
+                                            //tentativo
+                                            //item2.price -= item2.price * (detOrd.TaxCode / 100);
+                                            item2.price = item2.price / ((detOrd.TaxCode / 100) + 1);
+                                            detOrd.SubTotal = detOrd.SubTotal / ((detOrd.TaxCode / 100) + 1);
+                                            detOrd.Impuestos = detOrd.SubTotal * (detOrd.TaxCode / 100);
+                                            //detOrd.SubTotal = detOrd.SubTotal - detOrd.Impuestos;
+                                        }
+
+
                                         detOrd.itemid = item2.productId;
                                         detOrd.itemCode = item2.refId;
                                         detOrd.unitPrice = ToDecimal(item2.price);
