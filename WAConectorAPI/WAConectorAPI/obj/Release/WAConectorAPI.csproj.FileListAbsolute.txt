@@ -381,4 +381,4 @@ C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\
 C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.csproj.CopyComplete
 C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.dll
 C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.pdb
-C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.csproj.AssemblyReference.cache
+C:\Users\larce\Documents\GitHub\ConectorGermantecWA\WAConectorAPI\WAConectorAPI\obj\Release\WAConectorAPI.csprojAssemblyReference.cache

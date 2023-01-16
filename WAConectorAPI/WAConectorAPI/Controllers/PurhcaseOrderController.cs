@@ -204,11 +204,15 @@ namespace WAConectorAPI.Controllers
                                     Cn2.Close();
 
                                     ordenes.ProcesadaSAP = false;
-                                    ordenes.Impuestos = ToDecimal(detalle.totals[3].value);
+                                  //  ordenes.Impuestos = ToDecimal(detalle.totals[3].value);
                                     ordenes.Descuento = Math.Abs((detalle.totals[1].value != 0 ? ToDecimal(detalle.totals[1].value) : 0));
-                                    ordenes.Subtotal = ToDecimal(detalle.totals[0].value) - ordenes.Descuento;
+                                   // ordenes.Subtotal = ToDecimal(detalle.totals[0].value) - ordenes.Descuento;
                                     ordenes.Envio = ToDecimal(detalle.totals[2].value);
                                     ordenes.Total = ToDecimal(detalle.value);
+
+                                    ordenes.Impuestos = 0;
+                                    ordenes.Subtotal = 0;
+
                                     ordenes.Comments = detalle.shippingData.address.country + ", " + detalle.shippingData.address.city + ", " + detalle.shippingData.address.street + ", " + detalle.shippingData.address.complement;
                                     foreach (var item2 in detalle.items)
                                     {
@@ -224,12 +228,14 @@ namespace WAConectorAPI.Controllers
                                         {
                                             //tentativo
                                             //item2.price -= item2.price * (detOrd.TaxCode / 100);
-                                            item2.price = item2.price / ((detOrd.TaxCode / 100) + 1);
-                                            detOrd.SubTotal = detOrd.SubTotal / ((detOrd.TaxCode / 100) + 1);
-                                            detOrd.Impuestos = detOrd.SubTotal * (detOrd.TaxCode / 100);
+                                            item2.price = Convert.ToDouble( ToDecimal( Convert.ToInt32( (item2.price / Convert.ToDouble(((Decimal.Parse(detOrd.TaxCode.ToString()) / 100) + 1))) )));
+                                            detOrd.SubTotal = ToDecimal( Convert.ToDouble( Convert.ToInt32( ((detOrd.SubTotal / ((Decimal.Parse(detOrd.TaxCode.ToString()) / 100) + 1)) ) * 100)));
+                                            detOrd.Impuestos =  ToDecimal ( Convert.ToDouble( Convert.ToInt32( (detOrd.SubTotal * ((Decimal.Parse(detOrd.TaxCode.ToString()) / 100)  ) ) * 100 )));
                                             //detOrd.SubTotal = detOrd.SubTotal - detOrd.Impuestos;
                                         }
 
+                                        ordenes.Subtotal += detOrd.SubTotal;
+                                        ordenes.Impuestos += detOrd.Impuestos;
 
                                         detOrd.itemid = item2.productId;
                                         detOrd.itemCode = item2.refId;
