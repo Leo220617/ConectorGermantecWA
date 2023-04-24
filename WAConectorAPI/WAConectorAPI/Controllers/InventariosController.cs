@@ -309,7 +309,7 @@ namespace WAConectorAPI.Controllers
 
                                     inventario.Descripcion = detalle2.ProductDescription;
                                     inventario.Marca = detalle2.BrandName;
-                                    inventario.Imagen = detalle2.Images.FirstOrDefault().ImageUrl == null ? "" : detalle2.Images.FirstOrDefault().ImageUrl;
+                                    inventario.Imagen = detalle2.Images.FirstOrDefault() == null ? "" : detalle2.Images.FirstOrDefault().ImageUrl == null ? "" : detalle2.Images.FirstOrDefault().ImageUrl;
                                 }
                                 catch (Exception ex)
                                 {
@@ -332,7 +332,7 @@ namespace WAConectorAPI.Controllers
 
                         BitacoraErrores error = new BitacoraErrores();
                         error.Descripcion = ex.Message + " -> " + itemCode;
-                        error.StackTrace = "Insercion del inventario en la tabla media";
+                        error.StackTrace = "Insercion del inventario en la tabla media " + ex.StackTrace;
                         error.Fecha = DateTime.Now;
                         db.BitacoraErrores.Add(error);
                         db.SaveChanges();
@@ -464,7 +464,7 @@ namespace WAConectorAPI.Controllers
 
                         BitacoraErrores error = new BitacoraErrores();
                         error.Descripcion = ex.Message + " -> " + itemCode;
-                        error.StackTrace = "Insercion del inventario en la tabla media";
+                        error.StackTrace = "Insercion del inventario en la tabla media " + ex.StackTrace;
                         error.Fecha = DateTime.Now;
                         db.BitacoraErrores.Add(error);
                         db.SaveChanges();
@@ -482,7 +482,7 @@ namespace WAConectorAPI.Controllers
             {
                 BitacoraErrores error = new BitacoraErrores();
                 error.Descripcion = ex.Message;
-                error.StackTrace = "Insercion del inventario en la tabla media";
+                error.StackTrace = "Insercion del inventario en la tabla media " +ex.Message;
                 error.Fecha = DateTime.Now;
                 db.BitacoraErrores.Add(error);
                 db.SaveChanges();
