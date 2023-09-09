@@ -90,8 +90,8 @@ namespace WAConectorAPI.Controllers
                                     ordenes.Correo = detalle.clientProfileData.email;
                                     ordenes.idVtex = detalle.clientProfileData.userProfileId;
                                     ordenes.Cedula = (detalle.customData == null ? "00000000":detalle.customData.customApps.Where(a => a.id == "profile-document").FirstOrDefault().fields.documentNew);
-                                    ordenes.CreditCardNumber = detalle.paymentData.transactions[0].payments[0].lastDigits;
-                                    ordenes.VoucherNum = detalle.paymentData.transactions[0].payments[0].connectorResponses.nsu;
+                                    ordenes.CreditCardNumber = detalle.paymentData.transactions[0].payments.Length > 0 ? detalle.paymentData.transactions[0].payments[0].lastDigits : "0000";
+                                    ordenes.VoucherNum = detalle.paymentData.transactions[0].payments.Length > 0 ? detalle.paymentData.transactions[0].payments[0].connectorResponses.nsu : "0000";
                                     var SQL2 = "select top 1 CardCode from OCRD where E_Mail = '" + ordenes.Correo + "'";
 
                                     SqlConnection Cn2 = new SqlConnection(g.DevuelveCadena());
