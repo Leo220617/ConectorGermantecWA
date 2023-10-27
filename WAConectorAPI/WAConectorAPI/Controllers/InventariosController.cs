@@ -252,8 +252,8 @@ namespace WAConectorAPI.Controllers
                         else
                         {
                             db.Entry(inventario).State = System.Data.Entity.EntityState.Modified;
-                            if (string.IsNullOrEmpty(inventario.skuid))
-                            {
+                            //if (string.IsNullOrEmpty(inventario.skuid))
+                            //{
                                 //Aca nosotros encontramos cual es el skuid en vtex 
                                 HttpClient cliente2 = new HttpClient();
                                 cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
@@ -273,7 +273,7 @@ namespace WAConectorAPI.Controllers
 
                                 inventario.skuid = detalle;
                                 //Aca terminamos de encontrar el skuid
-                            }
+                            //}
 
                             inventario.Familia = item["ItmsGrpNam"].ToString();
                             inventario.OnHand = Convert.ToDecimal(item["OnHand"].ToString());
