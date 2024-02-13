@@ -15,7 +15,7 @@ using WAConectorAPI.Models.Vtex;
 
 namespace WAConectorAPI.Controllers
 {
-    public class PurhcaseOrderController: ApiController
+    public class PurhcaseOrderController : ApiController
     {
         G g = new G();
         ModelCliente db = new ModelCliente();
@@ -35,10 +35,10 @@ namespace WAConectorAPI.Controllers
                 cliente.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
                 cliente.DefaultRequestHeaders.Add("X-VTEX-API-AppToken", param.APP_TOKEN);
 
-                string path = param.urlOrdenesVTEX +"?f_creationDate=creationDate:[" + DateTime.Now.AddDays(-8).Year + "-" + (DateTime.Now.AddDays(-8).Month < 10 ? "0" + DateTime.Now.AddDays(-8).Month.ToString() : DateTime.Now.AddDays(-8).Month.ToString()) + "-" + (DateTime.Now.AddDays(-8).Day < 10 ? "0" + DateTime.Now.AddDays(-8).Day.ToString() : DateTime.Now.AddDays(-8).Day.ToString()) + "T01:00:00.000Z TO ";
-                path += DateTime.Now.Year+ "-" + (DateTime.Now.Month < 10 ? "0"+ DateTime.Now.Month.ToString() : DateTime.Now.Month.ToString())  + "-" + (DateTime.Now.Day < 10 ? "0" + DateTime.Now.Day.ToString() : DateTime.Now.Day.ToString()) + "T23:59:59.999Z]";
+                string path = param.urlOrdenesVTEX + "?f_creationDate=creationDate:[" + DateTime.Now.AddDays(-8).Year + "-" + (DateTime.Now.AddDays(-8).Month < 10 ? "0" + DateTime.Now.AddDays(-8).Month.ToString() : DateTime.Now.AddDays(-8).Month.ToString()) + "-" + (DateTime.Now.AddDays(-8).Day < 10 ? "0" + DateTime.Now.AddDays(-8).Day.ToString() : DateTime.Now.AddDays(-8).Day.ToString()) + "T01:00:00.000Z TO ";
+                path += DateTime.Now.Year + "-" + (DateTime.Now.Month < 10 ? "0" + DateTime.Now.Month.ToString() : DateTime.Now.Month.ToString()) + "-" + (DateTime.Now.Day < 10 ? "0" + DateTime.Now.Day.ToString() : DateTime.Now.Day.ToString()) + "T23:59:59.999Z]";
 
-                
+
 
 
                 HttpResponseMessage response = await cliente.GetAsync(path);
@@ -57,7 +57,7 @@ namespace WAConectorAPI.Controllers
                         try
                         {
 
-                       
+
                             var registro = db.EncOrdenes.Where(a => a.orderid == item.orderId).FirstOrDefault();
                             var registroH = db.EncOrdenesHistorico.Where(a => a.orderid == item.orderId).FirstOrDefault();
 
@@ -89,7 +89,7 @@ namespace WAConectorAPI.Controllers
                                     ordenes.telefono = detalle.clientProfileData.phone;
                                     ordenes.Correo = detalle.clientProfileData.email;
                                     ordenes.idVtex = detalle.clientProfileData.userProfileId;
-                                    ordenes.Cedula = (detalle.customData == null ? "00000000":detalle.customData.customApps.Where(a => a.id == "profile-document").FirstOrDefault().fields.documentNew);
+                                    ordenes.Cedula = (detalle.customData == null ? "00000000" : detalle.customData.customApps.Where(a => a.id == "profile-document").FirstOrDefault().fields.documentNew);
                                     ordenes.CreditCardNumber = detalle.paymentData.transactions[0].payments.Length > 0 ? detalle.paymentData.transactions[0].payments[0].lastDigits : "0000";
                                     ordenes.VoucherNum = detalle.paymentData.transactions[0].payments.Length > 0 ? detalle.paymentData.transactions[0].payments[0].connectorResponses.nsu : "0000";
                                     var SQL2 = "select top 1 CardCode from OCRD where E_Mail = '" + ordenes.Correo + "'";
@@ -143,7 +143,7 @@ namespace WAConectorAPI.Controllers
                                     }
                                     catch (Exception ex)
                                     {
-                                     
+
                                         try
                                         {
                                             var client = (SAPbobsCOM.BusinessPartners)G.Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBusinessPartners);
@@ -158,13 +158,13 @@ namespace WAConectorAPI.Controllers
                                             client.Currency = "##";
 
 
-                                        
+
                                             client.Addresses.SetCurrentLine(0);
 
                                             client.City = detalle.shippingData.address.city;
                                             client.County = detalle.shippingData.address.country;
                                             client.Address = (detalle.shippingData.address.street.Length > 49 ? detalle.shippingData.address.street.Substring(0, 49) : detalle.shippingData.address.street);
-                                    
+
                                             client.Addresses.AddressName = client.Address;
                                             client.Addresses.City = detalle.shippingData.address.city;
                                             client.Addresses.County = detalle.shippingData.address.country;
@@ -204,9 +204,9 @@ namespace WAConectorAPI.Controllers
                                     Cn2.Close();
 
                                     ordenes.ProcesadaSAP = false;
-                                  //  ordenes.Impuestos = ToDecimal(detalle.totals[3].value);
+                                    //  ordenes.Impuestos = ToDecimal(detalle.totals[3].value);
                                     ordenes.Descuento = Math.Abs((detalle.totals[1].value != 0 ? ToDecimal(detalle.totals[1].value) : 0));
-                                   // ordenes.Subtotal = ToDecimal(detalle.totals[0].value) - ordenes.Descuento;
+                                    // ordenes.Subtotal = ToDecimal(detalle.totals[0].value) - ordenes.Descuento;
                                     ordenes.Envio = ToDecimal(detalle.totals[2].value);
                                     ordenes.Total = ToDecimal(detalle.value);
 
@@ -224,13 +224,13 @@ namespace WAConectorAPI.Controllers
                                         detOrd.SubTotal = ToDecimal((item2.quantity * item2.price) - Convert.ToDouble(descont));
                                         detOrd.Total = detOrd.Impuestos + detOrd.SubTotal;
                                         detOrd.TaxCode = (detOrd.Descuento > 0 ? item2.priceTags[1].value : item2.priceTags[0].value);
-                                        if(detOrd.Impuestos == 0)
+                                        if (detOrd.Impuestos == 0)
                                         {
                                             //tentativo
                                             //item2.price -= item2.price * (detOrd.TaxCode / 100);
-                                            item2.price = Convert.ToDouble( ToDecimal( Convert.ToInt32( (item2.price / Convert.ToDouble(((Decimal.Parse(detOrd.TaxCode.ToString()) / 100) + 1))) )));
-                                            detOrd.SubTotal = ToDecimal( Convert.ToDouble( Convert.ToInt32( ((detOrd.SubTotal / ((Decimal.Parse(detOrd.TaxCode.ToString()) / 100) + 1)) ) * 100)));
-                                            detOrd.Impuestos =  ToDecimal ( Convert.ToDouble( Convert.ToInt32( (detOrd.SubTotal * ((Decimal.Parse(detOrd.TaxCode.ToString()) / 100)  ) ) * 100 )));
+                                            item2.price = Convert.ToDouble(ToDecimal(Convert.ToInt32((item2.price / Convert.ToDouble(((Decimal.Parse(detOrd.TaxCode.ToString()) / 100) + 1))))));
+                                            detOrd.SubTotal = ToDecimal(Convert.ToDouble(Convert.ToInt32(((detOrd.SubTotal / ((Decimal.Parse(detOrd.TaxCode.ToString()) / 100) + 1))) * 100)));
+                                            detOrd.Impuestos = ToDecimal(Convert.ToDouble(Convert.ToInt32((detOrd.SubTotal * ((Decimal.Parse(detOrd.TaxCode.ToString()) / 100))) * 100)));
                                             //detOrd.SubTotal = detOrd.SubTotal - detOrd.Impuestos;
                                         }
 
@@ -241,7 +241,7 @@ namespace WAConectorAPI.Controllers
                                         detOrd.itemCode = item2.refId;
                                         detOrd.unitPrice = ToDecimal(item2.price);
                                         detOrd.quantity = item2.quantity;
-                                    
+
                                         var SQL = " select top 1 U_BOD_VT from oitm where ItemCode like '%" + detOrd.itemCode + "%'";
 
                                         SqlConnection Cn = new SqlConnection(g.DevuelveCadena());
@@ -316,7 +316,7 @@ namespace WAConectorAPI.Controllers
 
                                     db.EncOrdenes.Add(ordenes);
                                     db.SaveChanges();
-                            
+
                                 }
 
                             }
@@ -326,7 +326,7 @@ namespace WAConectorAPI.Controllers
 
                             BitacoraErrores error = new BitacoraErrores();
                             error.Descripcion = ex.Message;
-                            error.StackTrace = "Insercion de la orden "+ item.orderId + " " + ex.StackTrace.ToString();
+                            error.StackTrace = "Insercion de la orden " + item.orderId + " " + ex.StackTrace.ToString();
                             error.Fecha = DateTime.Now;
                             db.BitacoraErrores.Add(error);
                             db.SaveChanges();
@@ -361,9 +361,9 @@ namespace WAConectorAPI.Controllers
                 PurchaseOrderViewModel cliente = new PurchaseOrderViewModel();
                 var facturas = db.EncOrdenes.Where(a => a.ProcesadaSAP == false).ToList();
 
-                foreach(var fac in facturas)
+                foreach (var fac in facturas)
                 {
-                        var SQL = "select top 1 CardCode from OCRD where E_Mail = '" + fac.Correo +"'";
+                    var SQL = "select top 1 CardCode from OCRD where E_Mail = '" + fac.Correo + "'";
 
                     SqlConnection Cn = new SqlConnection(g.DevuelveCadena());
 
@@ -387,16 +387,16 @@ namespace WAConectorAPI.Controllers
                     catch (Exception ex)
                     {
 
-                        
+
                     }
 
-                    
+
 
 
 
                     Cn.Close();
 
-                    if(String.IsNullOrEmpty(CardCode))
+                    if (String.IsNullOrEmpty(CardCode))
                     {
                         throw new Exception("No se encontró el cliente");
                     }
@@ -409,44 +409,44 @@ namespace WAConectorAPI.Controllers
                     var client = (Documents)G.Company.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oOrders);
                     client.DocObjectCode = BoObjectTypes.oOrders;
                     client.CardCode = CardCode;
-                    client.DocCurrency = (fac.currencyCode == "CRC" ? "COL": fac.currencyCode);
+                    client.DocCurrency = (fac.currencyCode == "CRC" ? "COL" : fac.currencyCode);
                     client.DocDate = fac.creationDate; //listo
                     client.DocDueDate = fac.creationDate; //listo
                     client.DocNum = 0; //automatico
 
                     //client.DiscountPercent = CalculaDescuento((fac.Subtotal + fac.Descuento),fac.Descuento);
-                    
 
-                        client.DocType = BoDocumentTypes.dDocument_Items;
-                   
-                        client.HandWritten = BoYesNoEnum.tNO;
 
-                 
+                    client.DocType = BoDocumentTypes.dDocument_Items;
+
+                    client.HandWritten = BoYesNoEnum.tNO;
+
+
 
                     client.NumAtCard = fac.orderid; //orderid
-                    
-                        client.ReserveInvoice = BoYesNoEnum.tNO;
-                
+
+                    client.ReserveInvoice = BoYesNoEnum.tNO;
+
 
                     client.Series = 5; //79 quemado
                     client.TaxDate = fac.creationDate; //CreationDate
-                 
-                        client.UserFields.Fields.Item("U_SCGIEC").Value = fac.orderid;
 
-                
-                    client.Comments = fac.Comments; //direccion
+                    client.UserFields.Fields.Item("U_SCGIEC").Value = fac.orderid;
+
+
+                    client.Comments = fac.Comments.Length > 200 ? fac.Comments.Substring(0, 200) : fac.Comments; //direccion
                     client.SalesPersonCode = 47; //Quemado 47
 
 
                     var detalle = db.DetOrdenes.Where(a => a.orderid == fac.orderid).ToList();
-                     
+
 
 
                     int i = 0;
 
                     foreach (var item in detalle)
                     {
-                        
+
 
 
                         client.Lines.SetCurrentLine(i);
@@ -465,19 +465,19 @@ namespace WAConectorAPI.Controllers
                         //}
 
 
-                        client.Lines.DiscountPercent =  0;
+                        client.Lines.DiscountPercent = 0;
                         client.Lines.ItemCode = item.itemCode;
                         client.Lines.Quantity = item.quantity;
                         client.Lines.TaxCode = "IVA-" + item.TaxCode.ToString();
-                         
-                    
-                            client.Lines.TaxOnly = BoYesNoEnum.tNO;
-             
+
+
+                        client.Lines.TaxOnly = BoYesNoEnum.tNO;
+
 
                         client.Lines.UnitPrice = Convert.ToDouble(item.SubTotal / item.quantity);
                         //Base Intermedia pregunta la bodega VTEX a la que pertenece
 
-                        if(string.IsNullOrEmpty(item.WarehouseCode))
+                        if (string.IsNullOrEmpty(item.WarehouseCode))
                         {
                             var SQL2 = " select top 1 U_BOD_VT from oitm where ItemCode like '%" + item.itemCode + "%'";
 
@@ -512,7 +512,7 @@ namespace WAConectorAPI.Controllers
                                 metodo.EnviarCorreo("No existe bodega para el articulo " + item.itemCode, error.Descripcion, error.StackTrace);
                             }
                             client.Lines.WarehouseCode = warehouse2;
-                           Cn.Close();
+                            Cn.Close();
                         }
                         else
                         {
@@ -528,7 +528,7 @@ namespace WAConectorAPI.Controllers
 
                     var respuesta = client.Add();
 
-                    if(respuesta == 0)
+                    if (respuesta == 0)
                     {
                         db.Entry(fac).State = System.Data.Entity.EntityState.Modified;
                         fac.ProcesadaSAP = true;
@@ -595,8 +595,8 @@ namespace WAConectorAPI.Controllers
 
                 }
 
- 
- 
+
+
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception ex)
@@ -630,7 +630,7 @@ namespace WAConectorAPI.Controllers
                 var str2 = str.Substring(str.Length - 2);
                 var str3 = str.Substring(0, str.Length - 2);
                 var comp = str3 + ',' + str2;
-                return  Convert.ToDecimal(comp);
+                return Convert.ToDecimal(comp);
             }
             catch (Exception ex)
             {
@@ -646,8 +646,8 @@ namespace WAConectorAPI.Controllers
                 return 0;
             }
 
-           
-            
+
+
         }
 
         public double CalculaDescuento(decimal TotalLinea, decimal MontoDescuento)
@@ -673,7 +673,7 @@ namespace WAConectorAPI.Controllers
             }
         }
 
-        
+
     }
 
 

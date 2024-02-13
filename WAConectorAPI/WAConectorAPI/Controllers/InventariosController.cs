@@ -187,8 +187,9 @@ namespace WAConectorAPI.Controllers
                             string detalle = "";
                             if (response2.IsSuccessStatusCode)
                             {
-                                detalle = await response2.Content.ReadAsAsync<string>();
-
+                                //detalle = await response2.Content.ReadAsAsync<string>();
+                                var respuesta = await response2.Content.ReadAsAsync<SkuIDRespuesta>();
+                                detalle = respuesta.Id.ToString();
                             }
 
 
@@ -254,25 +255,30 @@ namespace WAConectorAPI.Controllers
                             db.Entry(inventario).State = System.Data.Entity.EntityState.Modified;
                             //if (string.IsNullOrEmpty(inventario.skuid))
                             //{
-                                //Aca nosotros encontramos cual es el skuid en vtex 
-                                HttpClient cliente2 = new HttpClient();
-                                cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
-                                cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppToken", param.APP_TOKEN);
+                            //Aca nosotros encontramos cual es el skuid en vtex 
+
+                            inventario.ItemName = item["ItemName"].ToString();
+                            inventario.WhsCode = item["WhsCode"].ToString();
+                            HttpClient cliente2 = new HttpClient();
+                            cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppKey", param.APP_KEY);
+                            cliente2.DefaultRequestHeaders.Add("X-VTEX-API-AppToken", param.APP_TOKEN);
 
 
-                                string path2 = param.urlTomarSKU + inventario.ItemCode;
-                                HttpResponseMessage response2 = await cliente2.GetAsync(path2);
+                            string path2 = param.urlTomarSKU + inventario.ItemCode;
+                            HttpResponseMessage response2 = await cliente2.GetAsync(path2);
 
-                                string detalle = "";
-                                if (response2.IsSuccessStatusCode)
-                                {
-                                    detalle = await response2.Content.ReadAsAsync<string>();
+                            string detalle = "";
+                            if (response2.IsSuccessStatusCode)
+                            {
+                                 
+                                //detalle = await response2.Content.ReadAsAsync<string>();
+                                var respuesta = await response2.Content.ReadAsAsync<SkuIDRespuesta>();
+                                detalle = respuesta.Id.ToString();
+                            }
 
-                                }
 
-
-                                inventario.skuid = detalle;
-                                //Aca terminamos de encontrar el skuid
+                            inventario.skuid = detalle;
+                            //Aca terminamos de encontrar el skuid
                             //}
 
                             inventario.Familia = item["ItmsGrpNam"].ToString();
@@ -482,7 +488,7 @@ namespace WAConectorAPI.Controllers
             {
                 BitacoraErrores error = new BitacoraErrores();
                 error.Descripcion = ex.Message;
-                error.StackTrace = "Insercion del inventario en la tabla media " +ex.Message;
+                error.StackTrace = "Insercion del inventario en la tabla media " + ex.Message;
                 error.Fecha = DateTime.Now;
                 db.BitacoraErrores.Add(error);
                 db.SaveChanges();
@@ -560,7 +566,7 @@ namespace WAConectorAPI.Controllers
 
 
 
-                   
+
 
 
 
@@ -571,7 +577,7 @@ namespace WAConectorAPI.Controllers
 
                 var InventarioUnimart = db.InventarioUnimart.Where(a => a.FechaActualizacion < time).Take(40).ToList();
 
-                foreach(var item in InventarioUnimart)
+                foreach (var item in InventarioUnimart)
                 {
                     if (item.Stock >= 0 && item.Unimart)
                     {

@@ -192,6 +192,7 @@
     <Compile Include="Models\Apis\PagoViewModel.cs" />
     <Compile Include="Models\Apis\PurchaiseOrderLinesViewModel.cs" />
     <Compile Include="Models\Apis\PurchaseOrderViewModel.cs" />
+    <Compile Include="Models\Apis\SkuIDRespuesta.cs" />
     <Compile Include="Models\Apis\Unimart.cs" />
     <Compile Include="Models\ModelCliente\BitacoraErrores.cs" />
     <Compile Include="Models\ModelCliente\DetOrdenes.cs" />
