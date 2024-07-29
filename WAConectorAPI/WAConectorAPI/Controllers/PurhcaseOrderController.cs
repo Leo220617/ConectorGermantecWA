@@ -230,7 +230,10 @@ namespace WAConectorAPI.Controllers
                                             //item2.price -= item2.price * (detOrd.TaxCode / 100);
                                             item2.price = Convert.ToDouble(ToDecimal(Convert.ToInt32((item2.price / Convert.ToDouble(((Decimal.Parse(detOrd.TaxCode.ToString()) / 100) + 1))))));
                                             detOrd.SubTotal = ToDecimal(Convert.ToDouble(Convert.ToInt32(((detOrd.SubTotal / ((Decimal.Parse(detOrd.TaxCode.ToString()) / 100) + 1))) * 100)));
+                                           // detOrd.SubTotal = ToDecimal(Convert.ToDouble(Convert.ToDecimal( ((detOrd.SubTotal / ((Decimal.Parse(detOrd.TaxCode.ToString()) / 100) + 1))) * 100)));
+
                                             detOrd.Impuestos = ToDecimal(Convert.ToDouble(Convert.ToInt32((detOrd.SubTotal * ((Decimal.Parse(detOrd.TaxCode.ToString()) / 100))) * 100)));
+                                            //detOrd.Impuestos = ToDecimal(Convert.ToDouble(Convert.ToDecimal((detOrd.SubTotal * ((Decimal.Parse(detOrd.TaxCode.ToString()) / 100))) * 100)));
                                             //detOrd.SubTotal = detOrd.SubTotal - detOrd.Impuestos;
                                         }
 
@@ -629,7 +632,8 @@ namespace WAConectorAPI.Controllers
 
                 var str2 = str.Substring(str.Length - 2);
                 var str3 = str.Substring(0, str.Length - 2);
-                var comp = str3 + ',' + str2;
+                var separador = Metodos.ObtenerConfig("SeparadorDecimales");
+                var comp = str3 + separador + str2; 
                 return Convert.ToDecimal(comp);
             }
             catch (Exception ex)

@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Configuration;
 using WAConectorAPI.Models.ModelCliente;
 
 namespace WAConectorAPI.Controllers
@@ -25,6 +26,17 @@ namespace WAConectorAPI.Controllers
 
             }
             catch { }
+        }
+        public static string ObtenerConfig(string v)
+        {
+            try
+            {
+                return WebConfigurationManager.AppSettings[v];
+            }
+            catch
+            {
+                return "";
+            }
         }
         public int timeSpan()
         {
