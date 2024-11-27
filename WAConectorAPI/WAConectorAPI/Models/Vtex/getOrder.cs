@@ -98,7 +98,7 @@ namespace WAConectorAPI.Models.Vtex
         public string email { get; set; }
         public string phone { get; set; }
         public string userProfileId { get; set; }
-
+        public string document { get; set; }
     }
 
     public class customData
