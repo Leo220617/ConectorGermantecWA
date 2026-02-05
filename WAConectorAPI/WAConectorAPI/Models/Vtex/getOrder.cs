@@ -15,10 +15,17 @@ namespace WAConectorAPI.Models.Vtex
         public string hostname { get; set; }
         
     }
-
+    public class Paging
+    {
+        public int total { get; set; }
+        public int pages { get; set; }
+        public int currentPage { get; set; }
+        public int perPage { get; set; }
+    }
     public class ListaOrdenes
     {
         public getOrder[] list { get; set; }
+        public Paging paging { get; set; }
     }
 
 
@@ -77,6 +84,7 @@ namespace WAConectorAPI.Models.Vtex
     {
         public int value { get; set; }
         public decimal rawValue { get; set; }
+        public string name { get; set; }
     }
 
     public class shippingData
