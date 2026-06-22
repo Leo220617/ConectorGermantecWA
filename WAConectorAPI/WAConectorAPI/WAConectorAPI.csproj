@@ -174,6 +174,7 @@
     <Compile Include="Controllers\G.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IngoController.cs" />
+    <Compile Include="Controllers\InventarioEstilosController.cs" />
     <Compile Include="Controllers\InventariosController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\Metodos.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="Models\Apis\FiltroInventarios.cs" />
     <Compile Include="Models\Apis\infoArt.cs" />
     <Compile Include="Models\Apis\PagoViewModel.cs" />
+    <Compile Include="Models\Apis\ProductosEstilosJSON.cs" />
     <Compile Include="Models\Apis\PurchaiseOrderLinesViewModel.cs" />
     <Compile Include="Models\Apis\PurchaseOrderViewModel.cs" />
     <Compile Include="Models\Apis\SkuIDRespuesta.cs" />
@@ -201,6 +203,7 @@
     <Compile Include="Models\ModelCliente\EncOrdenesHistorico.cs" />
     <Compile Include="Models\ModelCliente\EnvioCorreos.cs" />
     <Compile Include="Models\ModelCliente\Inventario.cs" />
+    <Compile Include="Models\ModelCliente\InventarioEstilos.cs" />
     <Compile Include="Models\ModelCliente\InventariosBodegas.cs" />
     <Compile Include="Models\ModelCliente\InventarioUnimart.cs" />
     <Compile Include="Models\ModelCliente\Login.cs" />

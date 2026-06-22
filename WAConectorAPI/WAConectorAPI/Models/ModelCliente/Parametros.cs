@@ -25,5 +25,10 @@ namespace WAConectorAPI.Models.ModelCliente
         public string UnimartSecret { get; set; }
         public string UrlUnimart { get; set; }
         public string SQLInventarioUnimart { get; set; }
+        public string SQLInventarioEstilos { get; set; }
+        public string urlInventarioEstilos { get; set; }
+        public string UsuarioEstilos { get; set; }
+        public string ClaveEstilos { get; set; }
+        public string urlLoginEstilos { get; set; }
     }
 }
